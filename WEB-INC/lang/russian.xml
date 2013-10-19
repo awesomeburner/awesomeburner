@@ -1,0 +1,15 @@
+﻿<?GALP version="0.1" ?>
+	<pack encoding="UTF-8" lang="Русский">
+		<system>
+			<Messages>
+				<Message ID="0" type="fatal" where="db">Нет соединения с БД</Message>
+
+				<Message ID="1" type="info" where="log">Не обнаружен файл логов</Message>
+				<Message ID="2" type="warning_message" where="log">Лог-файл заблокирован для чтения</Message>
+				<Message ID="2" type="warning_message" where="log">Логи не будут записаны</Message>
+
+				<Message ID="3" type="warning_message" where="db"></Message>
+			</Messages>
+		</system>
+	</pack>
+</GALP>

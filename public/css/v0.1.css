@@ -1,0 +1,10 @@
+* {font-family: Georgia, "Times New Roman", Times, serif;padding-bottom: 0;}
+.article_title {font-size: 1.6em;margin: 20px 0;}
+.article_content {font-size: 1.2em;margin: 20px 0;}
+.published {color:#777}
+
+
+
+.tc { text-align: center; }
+.tl { text-align: left; }
+.tr { text-align: right; }

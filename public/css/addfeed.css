@@ -1,0 +1,10 @@
+.button
+{
+	background: ##f7f7f7;
+	border: 1px solid #4C77B6;
+	color: #000;
+	font-family: Verdana, Helvetica, Sans-Serif;
+	font-size: 12px;
+	padding: 2px;
+	vertical-align: middle;
+}

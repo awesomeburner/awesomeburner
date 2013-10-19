@@ -1,0 +1,11 @@
+AddDefaultCharset utf-8
+
+ServerSignature Off
+SetEnv SERVER_ADMIN vanzhiganov@ya.ru
+
+DirectoryIndex index.php
+
+RewriteEngine on
+RewriteRule	^feed/([0-9]+).html$ rss/feed.php?cid=$1 [QSA]
+RewriteRule	^feed/([0-9]+)-([0-9]+).html$ rss/feed.php?cid=$1&p=$2 [QSA]
+RewriteRule	^post/([0-9]+).html$ rss/item.php?item_id=$1 [QSA]

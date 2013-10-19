@@ -1,0 +1,45 @@
+<?php
+define("GA_A_LANG", "ru");
+define("GA_A_FORMATDATE", "Y.m.d, h:i");
+//$GA_A_FORMATDATE = "Y.m.d, h:i";
+
+define("GA_C_PATH", "/var/www/parking.anzhiganov.com/public");
+define("GA_C_URL", "http://parking.anzhiganov.com");
+
+define("GA_M_HOST", "localhost");
+define("GA_M_USER", "root");
+define("GA_M_PASS", "sql_password");
+define("GA_M_BASE", "parking");
+
+define('MYSQL_HOST', GA_M_HOST);
+define('MYSQL_USER', GA_M_USER);
+define('MYSQL_PASS', GA_M_PASS);
+define('MYSQL_BASE', GA_M_BASE);
+
+define('DB_HOST', GA_M_HOST);
+define('DB_USER', GA_M_USER);
+define('DB_PASS', GA_M_PASS);
+define('DB_NAME', GA_M_BASE);
+
+#-------------------------------------------------------------------------------
+
+function linkFeedAll($intPage = null) {
+  if (!$intPage) {
+    return GA_C_URL."/";
+  } else {
+    return GA_C_URL."/?p={$intPage}";
+  }
+}
+
+function linkFeedFeed($intFeedID) {
+  return GA_C_URL."/feed/{$intFeedID}.html";
+}
+
+function linkFeedItem($intItemID) {
+  //return GA_C_URL."/rss/item.php?item_id={$intItemID}";
+  return GA_C_URL."/post/{$intItemID}.html";
+}
+
+function linkFeedDocument($strDocument) {
+  return GA_C_URL.$strDocument;
+}
