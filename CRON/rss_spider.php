@@ -19,7 +19,7 @@ include '../WEB-INC/class.data.php';
 include '../WEB-INC/class.keyword.php';
 include '../WEB-INC/class.rss_spider.php';
 
-#$cDb = new db();
+$cDb = new clsMysql();
 $cFeedSpider = new feed_spider();
 
 $index = (isset($_GET['index'])) ? $_GET['index'] : 1;

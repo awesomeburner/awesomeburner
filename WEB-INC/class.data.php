@@ -1,21 +1,17 @@
 ﻿<?php
 DEFINE("DB_TABLE_PREFIX", "feed_");
 
-class data {
+class data extends clsMysql {
 	var $Feed = null;
 	var $Feeds = null;
 
 	function save_feed($feed_id, $feed_url, $lastindex, $lastbuilddate_int, $pubdate_int, $update, $title, $link, $description, $language, $copyright, $managingeditor, $webmaster, $pubdate, $lastbuilddate, $category, $generator, $docs, $cloud, $ttl, $image_url, $image_title, $image_link) {
 		// insert check changes function
 
-		$strQuery1 = "SELECT * FROM `feed_feeds` WHERE `feed_id`='{$feed_id}'";
-		$q1 = mysql_query($strQuery1);
+		$rows = $this->Query("SELECT * FROM `feed_feeds` WHERE `feed_id`='{$feed_id}' LIMIT 1", true);
 
-		if (mysql_error() <> "") {
-			echo "<br>".mysql_error()."<br>".$strQuery1;
-		}
-
-		$rows = mysql_fetch_object($q1);
+		//print_r($rows);return false;
+		//$rows = mysql_fetch_object($q1);
 
         $arrFeed = new container_feed($rows->feed_id, $rows->feed_url, $rows->lastindex, $rows->lastbuilddate_int, $rows->pubdate_int, $rows->update, $rows->title, $rows->link, $rows->description, $rows->language, $rows->copyright, $rows->managingeditor, $rows->webmaster, $rows->pubdate, $rows->lastbuilddate, $rows->category, $rows->generator, $rows->docs, $rows->cloud, $rows->ttl, $rows->image_url, $rows->image_title, $rows->image_link);
 
@@ -51,23 +47,18 @@ class data {
 		}
 	}
 	
-	function save_item($item_id, $feed_id, $pubdate_int, $title, $link, $description, $author, $category, $comments, $enclousure, $guid, $pubdate, $source, $json) {
+	public function save_item($item_id, $feed_id, $pubdate_int, $title, $link, $description, $author, $category, $comments, $enclousure, $guid, $pubdate, $source, $json) {
 		if (!$item_pubdate) {
-				//$item_pubdate = $datetime;
+			//$item_pubdate = $datetime;
 		}
-			
-		$strQuery9 = "SELECT `title`, `link`, `description`, `pubdate`, `category` FROM `".DB_TABLE_PREFIX."items` WHERE `feed_id`={$feed_id} AND `title`='{$title}' AND `pubdate`='{$pubdate}'";
-		$q3 = mysql_query($strQuery9);
+		$description_hash = md5($description);
+		$strQuery9 = "SELECT `title`, `link`, `description`, `pubdate`, `category` FROM `".DB_TABLE_PREFIX."items` WHERE `feed_id`={$feed_id} AND `checksum`='{$description_hash}' LIMIT 1";
 
-		if (mysql_error() <> "") {
-			echo "<br>".mysql_error()."<br>".$strQuery9."<br>";
-		}
-
-		$q3n = mysql_num_rows($q3);
+		$q3 = $this->Query($strQuery9, false);
+		$q3n = $this->num_rows;
 
 		if ($q3n == 0) {
 			$description = ($description) ? "'{$description}'" : "null";
-			$enclousure = ($enclousure) ? "'{$enclousure}'" : "null";
 			$author = ($author) ? "'{$author}'" : "null";
 			$category = ($category) ? "'".addslashes($category)."'" : "null";
 			$comments = ($comments) ? "'{$comments}'" : "null";
@@ -75,40 +66,22 @@ class data {
 			$pubdate = ($pubdate) ? "'{$pubdate}'" : "null";
 			$guid = ($guid) ? "'{$guid}'" : "null";
 			$source = ($source) ? "'{$source}'" : "null";
-			$itemsum = md5($description);
 			
+			echo "  check new article: ".$description_hash."\n";
 			
-			echo "  check new article: ".$itemsum."\n";
-			
-			$q1 = mysql_fetch_array(mysql_query("SELECT count(*) FROM `feed_items` WHERE `checksum`='{$itemsum}'"));
-			
-			if ($q1[0] > 0) {
-				echo "  new article not UNIQUE\n";
-				return false;
-			}
-			
-
-			$strQuery10 = "INSERT INTO `".DB_TABLE_PREFIX."items` (`item_id`, `feed_id`, `pubdate_int`, `title`, `link`, `checksum`, `description`, `author`, `category`, `comments`, `enclousure`, `guid`, `pubdate`, `source`) VALUES ('{$item_id}', '{$feed_id}', '{$pubdate_int}', '{$title}', '{$link}', '{$itemsum}', {$description}, {$author}, {$category}, {$comments}, {$enclousure}, {$guid}, {$pubdate}, {$source})";
+			$strQuery10 = "INSERT INTO `".DB_TABLE_PREFIX."items` (`item_id`, `feed_id`, `pubdate_int`, `title`, `link`, `checksum`, `description`, `author`, `category`, `comments`, `guid`, `pubdate`, `source`) VALUES ('{$item_id}', '{$feed_id}', '{$pubdate_int}', '{$title}', '{$link}', '{$description_hash}', {$description}, {$author}, {$category}, {$comments}, {$guid}, {$pubdate}, {$source})";
 			//echo $strQuery10."\n";
-			mysql_query($strQuery10);
-			$insert_id  = mysql_insert_id();
+			$this->Query($strQuery10, false);
+			$insert_id  = $this->insert_id;
 			//echo "\nitem:".$insert_id;
 				
-			if (mysql_error() <> "") {
-			//	echo "\n\n".mysql_error()."\n".$strQuery10."\n\n";
-			}
-				
-				
-
-				
-				
 			$strQuery11 = "INSERT INTO `feed_item_json` (`item_id`, `content`) VALUES ({$insert_id}, '{$json}')";
-			mysql_query($strQuery11);
-			if (mysql_error() <> "") {
-				echo "\n\n".mysql_error()."\n".$strQuery11."\n\n";
-			}
+			$this->Query($strQuery11);
 			
 			return $insert_id;
+		} else {
+			print "Duplicate\n";
+			return 0;
 		}
 	}
 

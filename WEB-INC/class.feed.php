@@ -178,8 +178,9 @@ class agregator_feed extends clsMysql {
 					case "COMMENTS" :
 						$tmp['COMMENTS'] = addslashes($vals[$i]['value']);
 					break;
-					case "ENCLOUSURE" :
-						$tmp['ENCLOUSURE'] = $vals[$i]['value'];
+					case "ENCLOSURE" :
+						//print_r($vals[$i]);
+						$tmp['ENCLOSURE'] = $vals[$i]['attributes'];
 					break;
 					case "GUID" :
 						$tmp['GUID'] = $vals[$i]['value'];
@@ -200,7 +201,7 @@ class agregator_feed extends clsMysql {
 
 				if ($vals[$i]['type'] == "close") {
 					//$items[] = new container_item(null, null, $tmp['PUBDATE'], $tmp["TITLE"], $tmp["LINK"], $tmp['DESCRIPTION'], $tmp['AUTHOR'], $tmp['CATEGORY'], $tmp['COMMENTS'], $tmp['ENCLOUSURE'], $tmp['GUID'], $tmp['PUBDATE'], $tmp['SOURCE']);
-					$items[] = new container_item(null, null, (date("Ymdhis", strtotime($tmp['PUBDATE']))), $tmp["TITLE"], $tmp["LINK"], $tmp['DESCRIPTION'], $tmp['AUTHOR'], $tmp['CATEGORY'], $tmp['COMMENTS'], $tmp['ENCLOUSURE'], $tmp['GUID'], $tmp['PUBDATE'], $tmp['SOURCE']);
+					$items[] = new container_item(null, null, (date("Ymdhis", strtotime($tmp['PUBDATE']))), $tmp["TITLE"], $tmp["LINK"], $tmp['DESCRIPTION'], $tmp['AUTHOR'], $tmp['CATEGORY'], $tmp['COMMENTS'], $tmp['ENCLOSURE'], $tmp['GUID'], $tmp['PUBDATE'], $tmp['SOURCE']);
 					unset($tmp);
 				}
 			}

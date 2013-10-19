@@ -1,18 +1,24 @@
 <?php
+// 1. get all feeds from database
+// 2. (feed get content)
+
+
 // класс индексирования
-class feed_spider {
+class feed_spider extends clsMysql {
 	var $cRssLib;
 
 	// конструктор: определяем в нем необходимые классы
 	function __construct() {
 		$this->cDownload	= new downloader();
 		$this->cData	= new data();
-		$this->cFeed	= new feed();
-		$this->feed		= new feed();
+		$this->cFeed	= new agregator_feed();
+		$this->feed		= new agregator_feed();
 		$this->cKeyword	= new keyword();
 	}
 	
-	// индексирование всех rss-каналов
+	/**
+	 * индексирование всех rss-каналов
+	 */
 	public function indexItem($FeedId) {
 		// выбираем из БД список каналов в массив
 		$feed = $this->cData->get_feed($FeedId);
@@ -106,14 +112,32 @@ class feed_spider {
 			for ($intCountItems = 0, $intNumItems = count($arrItems); $intCountItems < $intNumItems; $intCountItems++) {
 				unset($itemsum);
 				$arrItems[$intCountItems]->feed_id = $intChannelID;
-				
-				//
-				
+
+				//print_r($arrItems[$intCountItems]);
+
 				$item_id = $this->cData->save_item("null", $arrItems[$intCountItems]->feed_id, $arrItems[$intCountItems]->pubdate_int, $arrItems[$intCountItems]->title, $arrItems[$intCountItems]->link, $arrItems[$intCountItems]->description, $arrItems[$intCountItems]->author, $arrItems[$intCountItems]->category, $arrItems[$intCountItems]->comments, $arrItems[$intCountItems]->enclousure, $arrItems[$intCountItems]->guid, $arrItems[$intCountItems]->pubdate, $arrItems[$intCountItems]->source, addslashes(json_encode($arrItems[$intCountItems])));
-				
-				// ---
-				if (isset($item_id) && $item_id!==0) {
+
+				if (isset($item_id) && $item_id > 0) {
 					echo "  new item: ".$item_id."\n";
+					
+					// Save enclosure
+					if (isset($arrItems[$intCountItems]->enclousure['URL']) && $arrItems[$intCountItems]->enclousure['LENGTH'] > 0) {
+						$enclosure_tmp = array();
+						// TODO: Download file
+						// ...
+						
+						$enclosure_tmp['hash_32'] = md5($arrItems[$intCountItems]->enclousure['URL']);
+						$enclosure_tmp['hash_2'] = substr($enclosure_tmp['hash_32'], 0, 2);
+						$enclosure_tmp['hash_1'] = substr($enclosure_tmp['hash_32'], 0, 1);
+						$enclosure_tmp['length'] = $arrItems[$intCountItems]->enclousure['LENGTH'];
+						$enclosure_tmp['type'] = $arrItems[$intCountItems]->enclousure['TYPE'];
+						$enclosure_tmp['url'] = $arrItems[$intCountItems]->enclousure['URL'];
+						
+						$this->Query("INSERT INTO `feed_item_enclosure` (`item_id`, `hash_1`, `hash_2`, `hash_32`, `length`, `type`, `url`) VALUES ('{$item_id}', '{$enclosure_tmp['hash_1']}', '{$enclosure_tmp['hash_2']}', '{$enclosure_tmp['hash_32']}', '{$enclosure_tmp['length']}', '{$enclosure_tmp['type']}', '{$enclosure_tmp['url']}')", true);
+						
+						unset($enclosure_tmp);
+					}
+					
 					$keywords = $this->cKeyword->extract_keywords($arrItems[$intCountItems]->title." ".$arrItems[$intCountItems]->description);
 
 					foreach ($keywords as $k) {
@@ -124,7 +148,7 @@ class feed_spider {
 						}
 
 						if ($item_id !== 0 || $item_id !== '' || $keyword_id !== 0 || $keyword_id !== '') {
-							mysql_query("INSERT INTO `feed_keyword_item` (`keyword_id`,`item_id`) VALUES ('{$keyword_id}','{$item_id}')");
+						//	mysql_query("INSERT INTO `feed_keyword_item` (`keyword_id`,`item_id`) VALUES ('{$keyword_id}','{$item_id}')");
 						}
 					}
 					unset($keywords);

@@ -50,6 +50,23 @@ CREATE TABLE `feed_items` (
   PRIMARY KEY  (`item_id`,`title`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `feed_item_enclosure`;
+CREATE TABLE IF NOT EXISTS `feed_item_enclosure` (
+  `item_id` int(11) NOT NULL,
+  `hash_1` varchar(1) NOT NULL,
+  `hash_2` varchar(2) NOT NULL,
+  `hash_32` varchar(32) NOT NULL,
+  `length` int(11) NOT NULL,
+  `type` varchar(11) NOT NULL,
+  `url` varchar(360) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `feed_item_json`;
+CREATE TABLE IF NOT EXISTS `feed_item_json` (
+  `item_id` int(11) NOT NULL,
+  `content` text CHARACTER SET latin1 NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 -- ----------------------------
 -- Table structure for feed_saves_temp
 -- ----------------------------
