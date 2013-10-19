@@ -1,0 +1,5 @@
+install
+
+cp WEB-INC/conf.php.origin WEB-INC/conf.php
+
+
