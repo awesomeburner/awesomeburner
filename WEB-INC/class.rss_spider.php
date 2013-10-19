@@ -4,7 +4,7 @@
 
 
 // класс индексирования
-class feed_spider extends clsMysql {
+class feed_spider {
 	var $cRssLib;
 
 	// конструктор: определяем в нем необходимые классы
@@ -130,10 +130,24 @@ class feed_spider extends clsMysql {
 						$enclosure_tmp['hash_2'] = substr($enclosure_tmp['hash_32'], 0, 2);
 						$enclosure_tmp['hash_1'] = substr($enclosure_tmp['hash_32'], 0, 1);
 						$enclosure_tmp['length'] = $arrItems[$intCountItems]->enclousure['LENGTH'];
-						$enclosure_tmp['type'] = $arrItems[$intCountItems]->enclousure['TYPE'];
-						$enclosure_tmp['url'] = $arrItems[$intCountItems]->enclousure['URL'];
+						$enclosure_tmp['type'] = addslashes($arrItems[$intCountItems]->enclousure['TYPE']);
+						$enclosure_tmp['url'] = addslashes($arrItems[$intCountItems]->enclousure['URL']);
 						
-						$this->Query("INSERT INTO `feed_item_enclosure` (`item_id`, `hash_1`, `hash_2`, `hash_32`, `length`, `type`, `url`) VALUES ('{$item_id}', '{$enclosure_tmp['hash_1']}', '{$enclosure_tmp['hash_2']}', '{$enclosure_tmp['hash_32']}', '{$enclosure_tmp['length']}', '{$enclosure_tmp['type']}', '{$enclosure_tmp['url']}')", true);
+						$_e_p = "../public/static";
+						
+						// create folder in static, static/a/ab/
+						if (!is_dir($_e_p."/".$enclosure_tmp['hash_1'])) {
+							mkdir($_e_p."/".$enclosure_tmp['hash_1']);
+						}
+						if (!is_dir($_e_p."/".$enclosure_tmp['hash_1']."/".$enclosure_tmp['hash_2'])) {
+							mkdir($_e_p."/".$enclosure_tmp['hash_1']."/".$enclosure_tmp['hash_2']);
+						}
+
+						// get file from server, save in static
+						file_put_contents($_e_p."/".$enclosure_tmp['hash_1']."/".$enclosure_tmp['hash_2']."/".$enclosure_tmp['hash_32'], file_get_contents($enclosure_tmp['url']));
+						///$_e = file_get_contents($enclosure_tmp['url']);
+						
+						$this->cData->feed_item_enclosure_add($item_id, $enclosure_tmp['hash_1'], $enclosure_tmp['hash_2'], $enclosure_tmp['hash_32'], $enclosure_tmp['length'], $enclosure_tmp['type'], $enclosure_tmp['url']);
 						
 						unset($enclosure_tmp);
 					}

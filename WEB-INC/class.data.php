@@ -5,6 +5,11 @@ class data extends clsMysql {
 	var $Feed = null;
 	var $Feeds = null;
 
+	function feed_item_enclosure_add($item_id, $hash_1, $hash_2, $hash_32, $length, $type, $url) {
+		$this->Query("INSERT INTO `feed_item_enclosure` (`item_id`, `hash_1`, `hash_2`, `hash_32`, `length`, `type`, `url`) VALUES ('{$item_id}', '{$hash_1}', '{$hash_2}', '{$hash_32}', '{$length}', '{$type}', '{$url}')", false);
+		return true;
+	}
+
 	function save_feed($feed_id, $feed_url, $lastindex, $lastbuilddate_int, $pubdate_int, $update, $title, $link, $description, $language, $copyright, $managingeditor, $webmaster, $pubdate, $lastbuilddate, $category, $generator, $docs, $cloud, $ttl, $image_url, $image_title, $image_link) {
 		// insert check changes function
 
