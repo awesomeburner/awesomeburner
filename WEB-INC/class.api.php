@@ -5,6 +5,28 @@ class clsApi extends clsMysql {
 	public $keyword;
 	public $stat;
 
+	function __call($method, $args) {
+		$methods = array('feed' => true, 'stats');
+
+		if (!isset($methods[$method])) {
+			return array("status" => array("code" => 2, "message" => "method not exists"));
+		}
+
+		$clsname = 'agregator_'.$method;
+
+		if (!file_exists("../WEB-INC/class.{$method}.php")) {
+			return array("status" => array("code" => 3, "message" => "method class not exists"));
+		}
+
+		include "../WEB-INC/class.{$method}.php";
+
+		$$clsname = new $clsname();
+
+print_r($args);
+
+#		return $$clsname->$args['action']($args['option']);
+	}
+
 	/**
 	 *
 	 * @param array $arrOption => str URL

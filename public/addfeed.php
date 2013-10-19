@@ -2,12 +2,13 @@
 ini_set('error_reporting', 1);
 ini_set('display_errors', 1);
 
-include 'WEB-INC/conf.php';
-include 'WEB-INC/class.db.php';
-include 'WEB-INC/class.contain.feed.php';
-include 'WEB-INC/class.contain.item.php';
-include 'WEB-INC/class.data.php';
-include 'WEB-INC/class.feed.php';
+include "../WEB-INC/conf.php";
+include "../WEB-INC/class.db.php";
+include "../WEB-INC/class.contain.feed.php";
+include "../WEB-INC/class.contain.item.php";
+include "../WEB-INC/class.data.php";
+include "../WEB-INC/class.feed.php";
+include "../WEB-INC/class.api.php";
 
 $cDb = new db();
 $cData = new data();
@@ -22,9 +23,9 @@ if (isset($_POST['sum']) == md5(date("Ymd"))) {
 	<head>
 		<meta charset="utf-8" />
 		<title>Add new RSS-feed - BeeBlog.org</title>
-        <link href="css/960.css" rel="stylesheet" type="text/css" />
-        <link href="css/v0.1.css" rel="stylesheet" type="text/css" />
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+	        <link href="css/960.css" rel="stylesheet" type="text/css" />
+	        <link href="css/v0.1.css" rel="stylesheet" type="text/css" />
+	        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 	</head>
 	<body>
         <div class="container_12" id="header">

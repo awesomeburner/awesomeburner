@@ -1,6 +1,23 @@
 ﻿<?php
 // класс обаботки xml-файла
-class feed {
+class agregator_feed extends clsMysql {
+        public function add($parameter = null) {
+                $this->Query("INSERT INTO `feed_feeds` (`feed_url`) VALUES ('{$parameter['url']}')");
+
+                return $this->insert_id;
+        }
+        public function delete($parameter = null) {
+                if (isset($parameter->feed_id)) {
+                        $this->Query("DELETE FROM `feed_feeds` WHERE (`feed_id`={$parameter->feed_id})");
+                }
+                if (isset($parameter->url)) {
+                        $this->Query("DELETE FROM `feed_feeds` WHERE (`feed_url`={$parameter->url})");
+                }
+                return 0;
+        }
+
+
+
 	/**
 	* Обрработка XML-документа, преобразование в массив
 	*
