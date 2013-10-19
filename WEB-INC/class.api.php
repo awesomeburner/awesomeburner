@@ -6,7 +6,7 @@ class clsApi extends clsMysql {
 	public $stat;
 
 	function __call($method, $args) {
-		$methods = array('feed' => true, 'stats');
+		$methods = array('feed' => true, 'stats' => true);
 
 		if (!isset($methods[$method])) {
 			return array("status" => array("code" => 2, "message" => "method not exists"));
@@ -30,25 +30,4 @@ class clsApi extends clsMysql {
 	}
 	public function keyword_getKeywordId($arrOption) {}
 	public function keyword_add($parameter=null) {}
-
-
-
-	/**
-	 * 
-	 */
-	public function stat_get($parameter=null) {
-		switch ($parameter->object) {
-			// общее количество rss-лент в базе
-			case 'total_feeds':
-				$j['total_feeds'] = $this->Query("SELECT COUNT(*) FROM `feed_feeds`");
-			break;
-			// общее количество статей
-			case 'total_items':
-				$j['total_items'] = $this->Query("SELECT COUNT(*) FROM `feed_items`");
-			break;
-		}
-		
-		return $j;
-	}
-
 }
