@@ -1,20 +1,51 @@
 ﻿<?php
 // класс обаботки xml-файла
 class agregator_feed extends clsMysql {
-        public function add($parameter = null) {
-                $this->Query("INSERT INTO `feed_feeds` (`feed_url`) VALUES ('{$parameter['url']}')");
+	public function __call($ad, $parameter = null) {
+		return array("status" => array("code" => 6, "message" => "action not exists"));
+	}
+	
+    public function add($parameter = null) {
+		if (!isset($parameter['url'])) {
+			return array("status" => array("code" => 4, "message" => "url not specified"));
+		}
+		
+		// TODO: check exists url in database
 
-                return $this->insert_id;
-        }
-        public function delete($parameter = null) {
-                if (isset($parameter->feed_id)) {
-                        $this->Query("DELETE FROM `feed_feeds` WHERE (`feed_id`={$parameter->feed_id})");
-                }
-                if (isset($parameter->url)) {
-                        $this->Query("DELETE FROM `feed_feeds` WHERE (`feed_url`={$parameter->url})");
-                }
-                return 0;
-        }
+		$this->Query("INSERT INTO `feed_feeds` (`feed_url`) VALUES ('{$parameter['url']}')", true);
+
+		if (!$this->insert_id) {
+			return array("status" => array("code" => 5, "message" => "url not added"));
+		} 
+		
+		return array("result" => array("feed_id" => $this->insert_id), "status" => array("code" => 0, "message" => "ok"));
+	}
+	
+	public function delete($parameter = null) {
+		if (isset($parameter['feed_id'])) {
+			$this->Query("DELETE FROM `feed_feeds` WHERE (`feed_id`={$parameter['feed_id']})");
+		}
+
+		if (isset($parameter['url'])) {
+			$this->Query("DELETE FROM `feed_feeds` WHERE (`feed_url`={$parameter['url']})");
+		}
+		
+		// TODO: delete items
+
+		return 0;
+	}
+
+	public function get($parameter=null) {
+	}
+	
+	public function feed_get_by_id($parameter = null) {
+		if (!isset($option['where']['id'])) {
+			return false;
+		}
+		$feedid = $option['where']['id'];
+		$j['url'] = $this->Query("SELECT `feed_url` as `url` FROM `feed_feeds` WHERE `feed_id`={$feedid}");
+		return $j;
+	}
 
 
 

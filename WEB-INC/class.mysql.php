@@ -335,5 +335,3 @@ class clsMysql {
 		return $success;
 	}
 }// end
-
-//$Mysql =& new ClMysql();
