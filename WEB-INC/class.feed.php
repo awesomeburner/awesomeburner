@@ -91,7 +91,7 @@ class agregator_feed extends clsMysql {
 			`enclosure`.`hash_2`,
 			`enclosure`.`hash_32`
 			FROM `feed_items` `items`
-			INNER JOIN `feed_item_enclosure` `enclosure` ON `enclosure`.`item_id` = `items`.item_id
+			LEFT JOIN `feed_item_enclosure` `enclosure` ON `enclosure`.`item_id` = `items`.item_id
 			WHERE `items`.`item_id`='{$item_id}'
 			";
 		}
