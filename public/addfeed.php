@@ -4,18 +4,12 @@ ini_set('display_errors', 1);
 
 include "../WEB-INC/conf.php";
 include "../WEB-INC/class.mysql.php";
-include "../WEB-INC/class.contain.feed.php";
-include "../WEB-INC/class.contain.item.php";
-include "../WEB-INC/class.data.php";
-include "../WEB-INC/class.feed.php";
 include "../WEB-INC/class.api.php";
 
-$cDb = new clsMysql();
-$cData = new data();
-$cFeed = new feed();
+$api = new clsApi();
 
 if (isset($_POST['sum']) == md5(date("Ymd"))) {
-	$cFeed->add($_POST['url']);
+	$api->feed("add", array("url" => $_POST['url'], "lang" => "en"))
 }
 ?>
 <!DOCTYPE html>
@@ -32,8 +26,8 @@ if (isset($_POST['sum']) == md5(date("Ymd"))) {
             <div class="grid_12">
                 RSS-feeds: <span id="getnumderrssfeeds" style="font-weight: 600"></span>
                 Articles <span id="getnumderarticles" style="font-weight: 600"></span>
-                <a href="/addfeed.php">Add new RSS-feed</a>
-                <a href="/stat.php">View statistics</a>
+                <a href="addfeed.php">Add new RSS-feed</a>
+                <a href="stat.php">View statistics</a>
             </div>
 
 
@@ -67,12 +61,10 @@ var ad_domain = 'green';
 			<br class="clear"/>
 		</div>
 		<script>
-			$.getJSON('api.php?object=stat&action=getnumderrssfeeds', function(data) {
-				$.each(data, function(key, val) { $('#getnumderrssfeeds').append(val); });
-			});
-			$.getJSON('api.php?object=stat&action=getnumderarticles', function(data) {
-				$.each(data, function(key, val) { $('#getnumderarticles').append(val); });
-			});
+            $.getJSON('api.php?method=stats&action=get', function(data) {
+				$('#getnumderrssfeeds').append(data.result.feeds);
+				$('#getnumderarticles').append(data.result.items);
+            });
 		</script>
 	</body>
 </html>
