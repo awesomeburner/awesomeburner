@@ -180,11 +180,9 @@ var ad_domain = 'green';
         </div>
         
         <script>
-            $.getJSON('api.php?object=stat&action=getnumderrssfeeds', function(data) {
-                $.each(data, function(key, val) { $('#getnumderrssfeeds').append(val); });
-            });
-            $.getJSON('api.php?object=stat&action=getnumderarticles', function(data) {
-                $.each(data, function(key, val) { $('#getnumderarticles').append(val); });
+            $.getJSON('api.php?method=stats&action=get', function(data) {
+				$('#getnumderrssfeeds').append(data.result.feeds);
+				$('#getnumderarticles').append(data.result.items);
             });
 
             var _gaq = _gaq || [];

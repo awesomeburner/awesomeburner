@@ -48,6 +48,62 @@ class agregator_feed extends clsMysql {
 	}
 
 
+	public function item_get($parameter = null) {
+		$feed_id = $parameter['feed_id'];
+		$item_id = (isset($parameter['item_id'])) ? (int) $parameter['item_id']: 0;
+		$keyword = $parameter['keyword'];
+		$page = $parameter['page'];
+		$limit = $parameter['limit'];
+
+		if ($item_id == 0) {
+			if ($feed_id == 0) {
+				$str_query_add_feedid = null;
+			} else {
+				// TODO: с WHERE сделать нормально
+				$str_query_add_feedid = " WHERE `feed_id`='{$feed_id}' ".(count($keyword)) ? "AND" : null;
+			}
+			
+			if (count($keyword) == 0) {
+				$str_query_add_keyword = null;
+			} else {
+				// TODO: при сохранении поста сделать сохранение ключевых слов
+				// TODO: сделать выборку по ключевым словам
+				$str_query_add_keyword = null;
+				//$eferf = implode(",", $keyword);
+				//$str_query_add_keyword = "`item_id` IN (SELECT item_id FROM feed_item_keyword WHERE)";
+			}
+			$str_query = "SELECT * FROM `feed_items` {$str_query_add_feedid} {$str_query_add_keyword}";
+		} else {
+			$str_query = "
+			SELECT `items`.feed_id, (SELECT feed_feeds.title FROM feed_feeds WHERE feed_feeds.feed_id = `items`.feed_id) as feed_title,
+			`items`.item_id,
+			`items`.pubdate_int,
+			`items`.title,
+			`items`.checksum,
+			`items`.link,
+			`items`.description,
+			`items`.author,
+			`items`.category,
+			`items`.guid,
+			`items`.pubdate,
+			`items`.source,
+			`enclosure`.`hash_1`,
+			`enclosure`.`hash_2`,
+			`enclosure`.`hash_32`
+			FROM `feed_items` `items`
+			INNER JOIN `feed_item_enclosure` `enclosure` ON `enclosure`.`item_id` = `items`.item_id
+			WHERE `items`.`item_id`='{$item_id}'
+			";
+		}
+		
+		$r = $this->Query($str_query, false);
+		$rn = $this->num_rows;
+		
+		return array("result" => array("total" => $rn, "items" => $r), "status" => array("code" => 0, "message" => "ok"));
+
+		// $api->feed("get", array("feed_id" => 1, "page" => 1, "limit" => 20, "keyword" => array("one", "two")))
+	}
+
 
 	/**
 	* Обрработка XML-документа, преобразование в массив

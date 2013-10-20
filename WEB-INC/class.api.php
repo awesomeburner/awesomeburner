@@ -24,10 +24,4 @@ class clsApi extends clsMysql {
 
 		return $$clsname->$args[0]($args[1]);
 	}
-
-	public function keyword_get($parameter=null) {
-		return $this->Query("SELECT * FROM `feed_keywords`", true);
-	}
-	public function keyword_getKeywordId($arrOption) {}
-	public function keyword_add($parameter=null) {}
 }
