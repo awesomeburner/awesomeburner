@@ -75,7 +75,9 @@ $return .=<<<PPH
 				</div>
 				<div class=descr>
 					$strItemDescription
-					$strItemEnclosure
+					<div class="enclosure">
+						$strItemEnclosure
+					</div>
 				</div>
 				<div class=comments>
 					$strItemComments
