@@ -51,7 +51,7 @@ $strItemDescription = $item->description;
 $strItemPubDate   = date(GA_A_FORMATDATE, strtotime($item->pubdate_int));
 $strItemCategory  = $item->category;
 $strItemComments	= ($item->comments) ? "<a href='".$item->comments."'>Comments</a>" : null;
-$strItemEnclosure = "<img src='static/{$item->hash_1}/{$item->hash_2}/{$item->hash_32}' alt='' />";
+$strItemEnclosure = ($item->hash_32 !== "") : "<img src='static/{$item->hash_1}/{$item->hash_2}/{$item->hash_32}' alt='' />": null;
 
 #----	---------------------------------------------------------------------------
 
