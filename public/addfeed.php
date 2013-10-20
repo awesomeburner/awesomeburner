@@ -9,7 +9,7 @@ include "../WEB-INC/class.api.php";
 $api = new clsApi();
 
 if (isset($_POST['sum']) == md5(date("Ymd"))) {
-	$api->feed("add", array("url" => $_POST['url'], "lang" => "en"))
+	$api->feed("add", array("url" => $_POST['url'], "lang" => "en"));
 }
 ?>
 <!DOCTYPE html>
