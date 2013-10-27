@@ -17,6 +17,11 @@ if (!$intItemID) {
 $api = new clsApi();
 $result = $api->feed("item_get", array("item_id" => $intItemID));
 
+if (!$result['result']['total']) {
+	header("location: /");
+	exit();
+}
+
 $item = $result['result']['items'];
 
 
@@ -51,7 +56,7 @@ $strItemDescription = $item->description;
 $strItemPubDate   = date(GA_A_FORMATDATE, strtotime($item->pubdate_int));
 $strItemCategory  = $item->category;
 $strItemComments	= ($item->comments) ? "<a href='".$item->comments."'>Comments</a>" : null;
-$strItemEnclosure = (isset($item->hash_32) && isset($item->hash_2) && isset($item->hash_1)) ? "<img src='static/{$item->hash_1}/{$item->hash_2}/{$item->hash_32}' alt='' />" : null;
+$strItemEnclosure = (isset($item->hash_32) && isset($item->hash_2) && isset($item->hash_1)) ? "<img src='/static/{$item->hash_1}/{$item->hash_2}/{$item->hash_32}' alt='' />" : null;
 
 #----	---------------------------------------------------------------------------
 
