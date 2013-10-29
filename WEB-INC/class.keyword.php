@@ -1,14 +1,15 @@
 ﻿<?php
-class keyword {
-	public function check($strKeyword) {
-		$s = mysql_fetch_array(mysql_query("SELECT COUNT(*) FROM `feed_keywords` WHERE `keyword`='{$strKeyword}'"));
-	
-		if ($s[0] == 0) {
+class keyword extends clsMysql {
+	public function check($str_keyword) {
+		$s = $this->Query("SELECT COUNT(*) FROM `feed_keywords` WHERE `keyword`='{$str_keyword}'"));
+
+		if ($s == 0) {
 			return false;
 		} else {
 			return true;
 		}
 	}
+
 	public function get($strKeyword) {
 		$s = mysql_fetch_array(mysql_query("SELECT `keyword_id` FROM `feed_keywords` WHERE `keyword`='{$strKeyword}'"));
 
@@ -52,9 +53,7 @@ class keyword {
 
 		return $arr;
 	}
-	
-	
+
 	public function get_all() {
-		
 	}
 }
