@@ -103,12 +103,12 @@ PPH;
 	<head>
 		<meta charset="utf-8" />
 		<title><?=$strItemTitle;?> - BeeBlog.org</title>
-		<link href="css/960.css" rel="stylesheet" type="text/css" />
-        <link href="css/v0.1.css" rel="stylesheet" type="text/css" />
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-    </head>
-    <body>
-        <div class="container_12" id="header">
+		<link href="/css/960.css" rel="stylesheet" type="text/css" />
+		<link href="/css/v0.1.css" rel="stylesheet" type="text/css" />
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<div class="container_12" id="header">
             <div class="grid_12">
                 RSS-feeds: <span id="getnumderrssfeeds" style="font-weight: 600"></span>
                 Articles: <span id="getnumderarticles" style="font-weight: 600"></span>
@@ -151,16 +151,7 @@ PPH;
 				$('#getnumderrssfeeds').append(data.result.feeds);
 				$('#getnumderarticles').append(data.result.items);
             });
-			
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-24323088-1']);
-			_gaq.push(['_setDomainName', 'beeblog.org']);
-			_gaq.push(['_trackPageview']);
-			(function() {
-				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-			})();
 		</script>
+		<script src="/js/google.analitycs.js"></script>
 	</body>
 </html>
