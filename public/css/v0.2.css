@@ -50,6 +50,14 @@ ul#pkg_header_menu li {
 .published {
 	color: #777;
 }
+.article_title {
+    font-size: 1.6em;
+    margin: 20px 0;
+}
+.article_content {
+    font-size: 1.2em;
+    margin: 20px 0;
+}
 
 #getnumderrssfeeds {
 	font-weight: 700;
