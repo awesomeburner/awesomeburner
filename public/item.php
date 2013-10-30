@@ -72,18 +72,16 @@ NN;
 
 $return .=<<<PPH
 			<div class=item> 
-				<div class=date>
-					<b><font color="#999999">$strItemPubDate</font></b>
-				</div>
-				<div class=title>
-					<b><span><a href="$strItemLink">$strItemTitle</a></span></b>
-				</div>
 				<div class=descr>
 					$strItemDescription
 					<div class="enclosure">
 						$strItemEnclosure
 					</div>
 				</div>
+				<div class=date>
+					<b><font color="#999999">$strItemPubDate</font></b>
+				</div>
+
 				<div class=comments>
 					$strItemComments
 				</div>
@@ -137,9 +135,7 @@ PPH;
 
 			<div class="grid_12">
                 <div class="hentry">
-                    <div class="article_title">
-                    	<?=$strItemTitle;?>
-                    </div>
+                	<h2 class="article_title"><?=$strItemTitle;?></h2>
                 </div>
 			</div>
 			<div class="grid_12">

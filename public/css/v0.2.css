@@ -54,6 +54,11 @@ ul#pkg_header_menu li {
     font-size: 1.6em;
     margin: 20px 0;
 }
+
+h2.article_title {
+    font-weight: 400;
+}
+
 .article_content {
     font-size: 1.2em;
     margin: 20px 0;
