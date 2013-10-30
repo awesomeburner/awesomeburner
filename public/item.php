@@ -104,7 +104,7 @@ PPH;
 		<meta charset="utf-8" />
 		<title><?=$strItemTitle;?> - Fresh News</title>
 		<link href="/css/960.css" rel="stylesheet" type="text/css" />
-		<link href="/css/v0.1.css" rel="stylesheet" type="text/css" />
+		<link href="/css/v0.2.css" rel="stylesheet" type="text/css" />
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 	</head>
 	<body>
@@ -134,8 +134,13 @@ PPH;
             <hr class="clear" />
         </div>
 		<div class="container_12">
+
 			<div class="grid_12">
-				<h2><?=$strItemTitle;?></h2>
+                <div class="hentry">
+                    <div class="article_title">
+                    	<?=$strItemTitle;?>
+                    </div>
+                </div>
 			</div>
 			<div class="grid_12">
 				<?=$return;?>
