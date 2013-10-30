@@ -1,0 +1,59 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700&subset=cyrillic,latin);
+
+* {
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.tc {
+	text-align: center;
+}
+
+.tl {
+	text-align: left;
+}
+
+.tr {
+	text-align: right;
+}
+
+#pkg_header {
+    background-color: #911616;
+    !height: 30px;
+}
+
+#pkg_header_logo {
+}
+
+#pkg_header_logo a {
+    font-weight: 700;
+    text-decoration: none;
+    color: #fff;
+    margin: 0;
+}
+
+ul#pkg_header_menu {
+    list-style: none;
+}
+
+ul#pkg_header_menu li {
+    float: left;
+    height: 35px;
+    margin-left: 15px;
+}
+
+.published {
+	color: #777;
+}
+
+#getnumderrssfeeds {
+	font-weight: 700;
+}
+#getnumderarticles {
+	font-weight: 700;
+}

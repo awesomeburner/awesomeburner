@@ -102,22 +102,27 @@ PPH;
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title><?=$feed_title;?> - BeeBlog.org</title>
+		<title><?=$feed_title;?> - Fresh News</title>
         <link href="/css/960.css" rel="stylesheet" type="text/css" />
         <link href="/css/v0.1.css" rel="stylesheet" type="text/css" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
     </head>
     <body>
+        <div id="pkg_header">
+            <div class="container_12" id="header">
+                <div class="grid_12">
+                    <ul id="pkg_header_menu">
+                        <li id="pkg_header_logo"><a href="/">Fresh News</a></li>
+                        <li>RSS-feeds: <span id="getnumderrssfeeds"></span></li>
+                        <li>Articles <span id="getnumderarticles"></span></li>
+                        <li><a href="/addfeed.php">Add RSS</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="clear" />
+        </div>
         <div class="container_12" id="header">
-            <div class="grid_12">
-                RSS-feeds: <span id="getnumderrssfeeds" style="font-weight: 600"></span>
-                Articles: <span id="getnumderarticles" style="font-weight: 600"></span>
-                <a href="/addfeed.php">Add new RSS-feed</a>
-            </div>
-            <div class="grid_4 tc">
-                <a href="/" style="text-decoration: none; color: #000"><h1>BeeBlog.org</h1></a>
-            </div>
-            <div class="grid_8 tc">
+            <div class="grid_12 tc">
                 <script>
                 var ad_bgcolor = 'white';
                 var ad_link = 'blue';
@@ -168,16 +173,7 @@ PPH;
 			$.getJSON('/api.php?object=stat&action=getnumderarticles', function(data) {
 				$.each(data, function(key, val) { $('#getnumderarticles').append(val); });
 			});
-			
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-24323088-1']);
-			_gaq.push(['_setDomainName', 'beeblog.org']);
-			_gaq.push(['_trackPageview']);
-			(function() {
-				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-			})();
 		</script>
+		<script src="/js/google.analytics.js"></script>
 	</body>
 </html>

@@ -102,22 +102,27 @@ PPH;
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title><?=$strItemTitle;?> - BeeBlog.org</title>
+		<title><?=$strItemTitle;?> - Fresh News</title>
 		<link href="/css/960.css" rel="stylesheet" type="text/css" />
 		<link href="/css/v0.1.css" rel="stylesheet" type="text/css" />
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 	</head>
 	<body>
-		<div class="container_12" id="header">
-            <div class="grid_12">
-                RSS-feeds: <span id="getnumderrssfeeds" style="font-weight: 600"></span>
-                Articles: <span id="getnumderarticles" style="font-weight: 600"></span>
-                <a href="/addfeed.php">Add new RSS-feed</a>
+        <div id="pkg_header">
+            <div class="container_12" id="header">
+                <div class="grid_12">
+                    <ul id="pkg_header_menu">
+                        <li id="pkg_header_logo"><a href="/">Fresh News</a></li>
+                        <li>RSS-feeds: <span id="getnumderrssfeeds"></span></li>
+                        <li>Articles <span id="getnumderarticles"></span></li>
+                        <li><a href="/addfeed.php">Add RSS</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="grid_4 tc">
-                <a href="/" style="text-decoration: none; color: #000"><h1>BeeBlog.org</h1></a>
-            </div>
-            <div class="grid_8 tc">
+            <hr class="clear" />
+        </div>
+        <div class="container_12" id="header">
+            <div class="grid_12 tc">
                 <script>
                 var ad_bgcolor = 'white';
                 var ad_link = 'blue';
@@ -152,6 +157,6 @@ PPH;
 				$('#getnumderarticles').append(data.result.items);
             });
 		</script>
-		<script src="/js/google.analitycs.js"></script>
+		<script src="/js/google.analytics.js"></script>
 	</body>
 </html>

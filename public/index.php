@@ -89,17 +89,13 @@ for ($c = 0; $intLastItems > $c; $c++) {
   $strItemLinkToItem = linkFeedItem($item_id);
 
   $return .=<<<DDD
-  <div>
+        <div>
             <div class="item">
                 <div>
                     <div class="hentry">
-                       <hr />
-                        <div class="published">
-                            <span>$item_pubDate</span> 
+                        <div class="article_title">
+                            <span class="published">$item_pubDate</span>&nbsp;&mdash;&nbsp;<a href="$strItemLinkToFeed" class="blog">$strFeedTitle</a>&nbsp;&mdash;&nbsp;<a href="{$strItemLinkToItem}" class="topic">$item_title</a>
                         </div>
-                        <h2 class="article_title">
-                            <a href="$strItemLinkToFeed" class="blog">$strFeedTitle</a>&nbsp;&rarr;&nbsp;<a href="{$strItemLinkToItem}" class="topic">$item_title</a>
-                        </h2>
                     </div>
                 </div>
             </div>
@@ -111,45 +107,41 @@ DDD;
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>BeeBlog.org</title>
-        <link href="css/960.css" rel="stylesheet" type="text/css" />
-        <link href="css/v0.1.css" rel="stylesheet" type="text/css" />
+        <title>Fresh News</title>
+        <link href="/css/960.css" rel="stylesheet" type="text/css" />
+        <link href="/css/v0.2.css" rel="stylesheet" type="text/css" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
     </head>
     <body>
+        <div id="pkg_header">
+            <div class="container_12" id="header">
+                <div class="grid_12">
+                    <ul id="pkg_header_menu">
+                        <li id="pkg_header_logo"><a href="/">Fresh News</a></li>
+                        <li>RSS-feeds: <span id="getnumderrssfeeds"></span></li>
+                        <li>Articles <span id="getnumderarticles"></span></li>
+                        <li><a href="/addfeed.php">Add RSS</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="clear" />
+        </div>
         <div class="container_12" id="header">
-            <div class="grid_12">
-                RSS-feeds: <span id="getnumderrssfeeds" style="font-weight: 600"></span>
-                Articles <span id="getnumderarticles" style="font-weight: 600"></span>
-                <a href="/addfeed.php">Add new RSS-feed</a>
-                <a href="/stat.php">View statistics</a>
-            </div>
-
-
-            <div class="grid_4 tc">
-                <a href="/" style="text-decoration: none; color: #000"><h1>BeeBlog.org</h1></a>
-            </div>
-<div class="grid_8 tc">
-<script>
-var ad_bgcolor = 'white';
-var ad_link = 'blue';
-var ad_text = 'black';
-var ad_domain = 'green';
-</script>
-<script src="http://advertious.com/show.php?pid=1108"></script>
+            <div class="grid_12 tc">
+                <script>
+                var ad_bgcolor = 'white';
+                var ad_link = 'blue';
+                var ad_text = 'black';
+                var ad_domain = 'green';
+                </script>
+                <script src="http://advertious.com/show.php?pid=1108"></script>
             </div>
             <hr class="clear" />
         </div>
         <div class="container_12">
             <div class="grid_12">
                 
-
-                
-                
                 <?=$return;?>
-                
-                
-                
                 
             </div>
             <br class="clear"/>
@@ -164,36 +156,25 @@ var ad_domain = 'green';
             <br class="clear"/>
         </div>
         
-        
-     <div class="container_12">
+    
+        <div class="container_12">
             <div class="grid_12 tc">
-        
-                      <script>
-var ad_bgcolor = 'white';
-var ad_link = 'blue';
-var ad_text = 'black';
-var ad_domain = 'green';
-</script>
-<script src="http://advertious.com/show.php?pid=1105"></script>
-                  </div>
+                <script>
+                var ad_bgcolor = 'white';
+                var ad_link = 'blue';
+                var ad_text = 'black';
+                var ad_domain = 'green';
+                </script>
+                <script src="http://advertious.com/show.php?pid=1105"></script>
+            </div>
             <br class="clear"/>
         </div>
-        
         <script>
             $.getJSON('api.php?method=stats&action=get', function(data) {
 				$('#getnumderrssfeeds').append(data.result.feeds);
 				$('#getnumderarticles').append(data.result.items);
             });
-
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-24323088-1']);
-            _gaq.push(['_setDomainName', 'beeblog.org']);
-            _gaq.push(['_trackPageview']);
-            (function() {
-                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-            })();
         </script>
+        <script src="/js/google.analytics.js"></script>
     </body>
 </html>
