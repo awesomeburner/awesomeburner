@@ -1,4 +1,5 @@
 <?php
+define("GA_URL_SEO", false);
 define("GA_A_LANG", "ru");
 define("GA_A_FORMATDATE", "Y.m.d, h:i");
 //$GA_A_FORMATDATE = "Y.m.d, h:i";
@@ -24,22 +25,29 @@ define('DB_NAME', GA_M_BASE);
 #-------------------------------------------------------------------------------
 
 function linkFeedAll($intPage = null) {
-  if (!$intPage) {
-    return GA_C_URL."/";
-  } else {
-    return GA_C_URL."/?p={$intPage}";
-  }
+	if (!$intPage) {
+		return GA_C_URL."/";
+	} else {
+		return GA_C_URL."/?p={$intPage}";
+	}
 }
 
 function linkFeedFeed($intFeedID) {
-  return GA_C_URL."/feed/{$intFeedID}.html";
+	if (GA_URL_SEO) {
+		return GA_C_URL."/feed/{$intFeedID}.html";
+	} else {
+		return GA_C_URL."/feed.php?feed_id={$intFeedID}";
+	}
 }
 
 function linkFeedItem($intItemID) {
-  //return GA_C_URL."/rss/item.php?item_id={$intItemID}";
-  return GA_C_URL."/post/{$intItemID}.html";
+	if (GA_URL_SEO) {
+		return GA_C_URL."/post/{$intItemID}.html";
+	} else {
+		return GA_C_URL."/item.php?item_id={$intItemID}";
+	}
 }
 
 function linkFeedDocument($strDocument) {
-  return GA_C_URL.$strDocument;
+	return GA_C_URL.$strDocument;
 }
