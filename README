@@ -1,5 +1,27 @@
-install
+Установка
+=========
 
 cp WEB-INC/conf.php.origin WEB-INC/conf.php
 
+API
+===
+
+RSS
+---
+
+Добавление новой rss-ленты в БД
+
+$api->feed("add", array("url" => "http://www.ru/rss", "lang" => "en"))
+
+Удаление rss-ленты из БД
+
+$api->feed("delete", array("url" => "http://www.ru/rss"))
+
+Вывод статей определенной rss-ленты
+
+$api->feed("get", array("feed_id" => 1, "page" => 1, "limit" => 20, "keyword" => array("one", "two")))
+
+Вывод статистики
+
+$api->stats("get", null)
 
