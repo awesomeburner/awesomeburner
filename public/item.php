@@ -51,7 +51,7 @@ $strFeedDescr = $item->description;
 
 $strItemID        = $item->item_id;
 $strItemTitle     = $item->title;
-$strItemLink      = $item->link;
+$strItemLink      = "/go.php?url=" . urlencode($item->link);
 $strItemDescription = $item->description;
 $strItemPubDate   = date(GA_A_FORMATDATE, strtotime($item->pubdate_int));
 $strItemCategory  = $item->category;
