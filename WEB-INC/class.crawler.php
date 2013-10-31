@@ -100,15 +100,19 @@ class agregator_crawler extends clsMysql {
 	// индексирование определенного канала
 	function spider_channel($intChannelID, $strUrl) {
 		$download = new downloader();
+		$feed = new agregator_feed();
+		$data = new data();
+		$keyword = new keyword();
+
 		// закачиваем ресурс
-		$strData = $download->get_resource($strUrl);
+		$str_data = $download->get_resource($strUrl);
 		
-		if ($strData == false) {
+		if ($str_data == false) {
 			return false;
 		}
 
 		// обрабатываем документ
-		$arrData = $this->cFeed->parse($strData);
+		$arrData = $feed->parse($str_data);
 
 		$arrFeed = $arrData['feed'];
 		$arrItems = $arrData['items'];
@@ -121,7 +125,7 @@ class agregator_crawler extends clsMysql {
 			//$arrFeedData->feed->update = date("Ymdhis");
 
 			// отправляем массив данных на сохранение
-			$this->cData->save_feed($arrFeed->feed_id, $arrFeed->feed_url, $arrFeed->lastindex, $arrFeed->lastbuilddate_int, $arrFeed->pubdate_int, null, $arrFeed->title, $arrFeed->link, $arrFeed->description, $arrFeed->language, $arrFeed->copyright, $arrFeed->managingeditor, $arrFeed->webmaster, $arrFeed->pubdate, $arrFeed->lastbuilddate, $arrFeed->category, $arrFeed->generator, $arrFeed->docs, $arrFeed->cloud, $arrFeed->ttl, $arrFeed->image_url, $arrFeed->image_title, $arrFeed->image_link);
+			$data->save_feed($arrFeed->feed_id, $arrFeed->feed_url, $arrFeed->lastindex, $arrFeed->lastbuilddate_int, $arrFeed->pubdate_int, null, $arrFeed->title, $arrFeed->link, $arrFeed->description, $arrFeed->language, $arrFeed->copyright, $arrFeed->managingeditor, $arrFeed->webmaster, $arrFeed->pubdate, $arrFeed->lastbuilddate, $arrFeed->category, $arrFeed->generator, $arrFeed->docs, $arrFeed->cloud, $arrFeed->ttl, $arrFeed->image_url, $arrFeed->image_title, $arrFeed->image_link);
 			
 			for ($intCountItems = 0, $intNumItems = count($arrItems); $intCountItems < $intNumItems; $intCountItems++) {
 				unset($itemsum);
@@ -129,7 +133,7 @@ class agregator_crawler extends clsMysql {
 
 				//print_r($arrItems[$intCountItems]);
 
-				$item_id = $this->cData->save_item("null", $arrItems[$intCountItems]->feed_id, $arrItems[$intCountItems]->pubdate_int, $arrItems[$intCountItems]->title, $arrItems[$intCountItems]->link, $arrItems[$intCountItems]->description, $arrItems[$intCountItems]->author, $arrItems[$intCountItems]->category, $arrItems[$intCountItems]->comments, $arrItems[$intCountItems]->enclousure, $arrItems[$intCountItems]->guid, $arrItems[$intCountItems]->pubdate, $arrItems[$intCountItems]->source, addslashes(json_encode($arrItems[$intCountItems])));
+				$item_id = $data->save_item("null", $arrItems[$intCountItems]->feed_id, $arrItems[$intCountItems]->pubdate_int, $arrItems[$intCountItems]->title, $arrItems[$intCountItems]->link, $arrItems[$intCountItems]->description, $arrItems[$intCountItems]->author, $arrItems[$intCountItems]->category, $arrItems[$intCountItems]->comments, $arrItems[$intCountItems]->enclousure, $arrItems[$intCountItems]->guid, $arrItems[$intCountItems]->pubdate, $arrItems[$intCountItems]->source, addslashes(json_encode($arrItems[$intCountItems])));
 
 				if (isset($item_id) && $item_id > 0) {
 					echo "  new item: ".$item_id."\n";
@@ -161,25 +165,25 @@ class agregator_crawler extends clsMysql {
 						file_put_contents($_e_p."/".$enclosure_tmp['hash_1']."/".$enclosure_tmp['hash_2']."/".$enclosure_tmp['hash_32'], file_get_contents($enclosure_tmp['url']));
 						///$_e = file_get_contents($enclosure_tmp['url']);
 						
-						$this->cData->feed_item_enclosure_add($item_id, $enclosure_tmp['hash_1'], $enclosure_tmp['hash_2'], $enclosure_tmp['hash_32'], $enclosure_tmp['length'], $enclosure_tmp['type'], $enclosure_tmp['url']);
+						$data->feed_item_enclosure_add($item_id, $enclosure_tmp['hash_1'], $enclosure_tmp['hash_2'], $enclosure_tmp['hash_32'], $enclosure_tmp['length'], $enclosure_tmp['type'], $enclosure_tmp['url']);
 						
 						unset($enclosure_tmp);
 					}
 					
-					$keywords = $this->cKeyword->extract_keywords($arrItems[$intCountItems]->title." ".$arrItems[$intCountItems]->description);
+					$arr_keywords = $keyword->extract_keywords($arrItems[$intCountItems]->title." ".$arrItems[$intCountItems]->description);
 
-					foreach ($keywords as $k) {
-						if ($this->cKeyword->check($k) == false) {
-							$keyword_id = $this->cKeyword->save($k);
+					foreach ($arr_keywords as $k) {
+						if ($keyword->check($k) == false) {
+							$keyword_id = $keyword->save($k);
 						} else {
-							$keyword_id = $this->cKeyword->get($k);
+							$keyword_id = $keyword->get($k);
 						}
 
 						if ($item_id !== 0 || $item_id !== '' || $keyword_id !== 0 || $keyword_id !== '') {
 						//	mysql_query("INSERT INTO `feed_keyword_item` (`keyword_id`,`item_id`) VALUES ('{$keyword_id}','{$item_id}')");
 						}
 					}
-					unset($keywords);
+					unset($arr_keywords);
 				}
 			}
 			return true;
