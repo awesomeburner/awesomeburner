@@ -25,3 +25,6 @@ $api->feed("get", array("feed_id" => 1, "page" => 1, "limit" => 20, "keyword" =>
 
 $api->stats("get", null)
 
+Паук
+
+$api->crawler("all", array("limit" => 10))

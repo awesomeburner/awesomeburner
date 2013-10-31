@@ -6,7 +6,7 @@ class clsApi extends clsMysql {
 	public $stat;
 
 	function __call($method, $args) {
-		$methods = array('feed' => true, 'stats' => true);
+		$methods = array('feed' => true, 'stats' => true, 'crawler' => true);
 
 		if (!isset($methods[$method])) {
 			return array("status" => array("code" => 2, "message" => "method not exists"));
