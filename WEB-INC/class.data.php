@@ -91,21 +91,12 @@ class data extends clsMysql {
 	}
 
 	function update_channel_indexdate($intChannelID, $intTimestamp) {
-		$q1 = "UPDATE `feed_feeds` SET `lastindex`='{$intTimestamp}' WHERE (`channel_id`={$intChannelID})";
-		mysql_query($q1);
-
-		if (mysql_error() <> "") {
-			echo "<br>".mysql_error()."<br>".$q1."<br>";
-			return false;
-		}
+		$this->Query("UPDATE `feed_feeds` SET `lastindex`='{$intTimestamp}' WHERE (`channel_id`={$intChannelID})");
 
 		return true;
 	}
 
-##################################
-
-
-
+	##################################
 
 	/*
 	$intLimitStart = integer
@@ -229,8 +220,7 @@ class data extends clsMysql {
 		return $items;
 	}
 
-	function get_item($intItemID)
-	{
+	function get_item($intItemID) {
 		$strQuery = "SELECT * FROM `".DB_TABLE_PREFIX."items` WHERE `item_id`={$intItemID}";
 		$doQuery = mysql_query($strQuery);
 		
@@ -247,22 +237,12 @@ class data extends clsMysql {
 
 	##########
 
-	function count_feeds()
-	{
-		$query = "SELECT COUNT(*) FROM `".DB_TABLE_PREFIX."feeds`";
-		$q = mysql_query($query);
-		$res = mysql_fetch_array($q);
-		if (mysql_error()) return false;
-		return $res[0];
+	function count_feeds() {
+		return $this->Query("SELECT COUNT(*) FROM `".DB_TABLE_PREFIX."feeds`");
 	}
 	
 	function count_feed_items($intFeedID) {
-		$q = mysql_query("SELECT COUNT(*) FROM `".DB_TABLE_PREFIX."items` WHERE `feed_id`={$intFeedID}");
-		$res = mysql_fetch_array($q);
-
-		if (mysql_error()) return false;
-
-		return $res[0];
+		return $this->Query("SELECT COUNT(*) FROM `".DB_TABLE_PREFIX."items` WHERE `feed_id`={$intFeedID}");
 	}
 
 	###########
@@ -273,9 +253,8 @@ class data extends clsMysql {
 	* return: bool
 	**/
 	function delete_feed($intFeedID) {
-		mysql_query("DELETE FROM `feed_feeds` WHERE (`feed_id`={$intFeedID})");
+		$this->Query("DELETE FROM `feed_feeds` WHERE (`feed_id`={$intFeedID})");
 
-		if (mysql_error()) return false;
 		return true;
 	}
 
@@ -285,9 +264,8 @@ class data extends clsMysql {
 	* return: bool
 	**/
 	function delete_item($intItemID) {
-		mysql_query("DELETE FROM `".DB_TABLE_PREFIX."items` WHERE (`item_id`={$intItemID})");
+		$this->Query("DELETE FROM `".DB_TABLE_PREFIX."items` WHERE (`item_id`={$intItemID})");
 
-		if (mysql_error()) return false;
 		return true;
 	}
 
@@ -297,18 +275,8 @@ class data extends clsMysql {
 	* return: bool
 	**/
 	function delete_items($intFeedID) {
-		mysql_query("DELETE FROM `".DB_TABLE_PREFIX."items` WHERE (`feed_id`={$intFeedID})");
-
-		$this->sqldebug(mysql_error());
+		$this->Query("DELETE FROM `".DB_TABLE_PREFIX."items` WHERE (`feed_id`={$intFeedID})");
 
 		return true;
-	}
-	
-	public function sqldebug($mysql_error) {
-		if ($mysql_error <> "") {
-			echo $mysql_error."<br>".$strQuery;
-		}
-
-		return null;
 	}
 };
