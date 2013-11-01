@@ -1,6 +1,5 @@
 ﻿<?php
-class container_feed
-{
+class container_feed {
 	// programm
 	var $feed_id            = null;
 	var $feed_url           = null;
@@ -67,4 +66,4 @@ class container_feed
         $this->image_link   = $image_link;
     }
 }
-?>
+

@@ -14,11 +14,12 @@ class data extends clsMysql {
 		// insert check changes function
 
 		$rows = $this->Query("SELECT * FROM `feed_feeds` WHERE `feed_id`='{$feed_id}' LIMIT 1", true);
+		$fields = " ";
 
 		//print_r($rows);return false;
 		//$rows = mysql_fetch_object($q1);
 
-        $arrFeed = new container_feed($rows->feed_id, $rows->feed_url, $rows->lastindex, $rows->lastbuilddate_int, $rows->pubdate_int, $rows->update, $rows->title, $rows->link, $rows->description, $rows->language, $rows->copyright, $rows->managingeditor, $rows->webmaster, $rows->pubdate, $rows->lastbuilddate, $rows->category, $rows->generator, $rows->docs, $rows->cloud, $rows->ttl, $rows->image_url, $rows->image_title, $rows->image_link);
+        	$arrFeed = new container_feed($rows->feed_id, $rows->feed_url, $rows->lastindex, $rows->lastbuilddate_int, $rows->pubdate_int, $rows->update, $rows->title, $rows->link, $rows->description, $rows->language, $rows->copyright, $rows->managingeditor, $rows->webmaster, $rows->pubdate, $rows->lastbuilddate, $rows->category, $rows->generator, $rows->docs, $rows->cloud, $rows->ttl, $rows->image_url, $rows->image_title, $rows->image_link);
 
 		if (($arrFeed->feed_id == $feed_id) && ($arrFeed->feed_url == $feed_url)) {
 			if ($arrFeed->lastindex !== $lastindex) {$fields .= "`lastindex`='{$lastindex}'";}
@@ -44,11 +45,9 @@ class data extends clsMysql {
 			if ($arrFeed->image_link !== $image_link) {$fields .= ", `image_link`='{$image_link}'";}
 
 			$strUpdate = "UPDATE `feed_feeds` SET {$fields} WHERE (`feed_id`={$feed_id})";
-			mysql_query($strUpdate);
+			$this->Query($strUpdate);
 
-			if (mysql_error()) {
-				echo "<br>".mysql_error()."<br>".$strUpdate;
-			}
+			return true;
 		}
 	}
 	
@@ -238,7 +237,7 @@ class data extends clsMysql {
 	##########
 
 	function count_feeds() {
-		return $this->Query("SELECT COUNT(*) FROM `".DB_TABLE_PREFIX."feeds`");
+		return $this->Query("SELECT COUNT(*) FROM `".DB_TABLE_PREFIX."feeds`", true);
 	}
 	
 	function count_feed_items($intFeedID) {

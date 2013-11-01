@@ -43,7 +43,7 @@ class agregator_crawler extends clsMysql {
 
 		for ($i = 0; $i < $intAllFeeds; $i++) {
 			// выбираем из БД список каналов в массив
-			$arrFeeds	= $data->get_feeds("", "", "`update`", "ASC", $i, $intLimit);
+			$arrFeeds	= $cl_data->get_feeds("", "", "`update`", "ASC", $i, $intLimit);
 			$intFeeds = count($arrFeeds);
 		
 			if (!$arrFeeds) {
@@ -73,8 +73,9 @@ class agregator_crawler extends clsMysql {
 	 * индексирование всех rss-каналов
 	 */
 	public function indexItem($FeedId) {
+		$cl_data = new data();
 		// выбираем из БД список каналов в массив
-		$feed = $this->cData->get_feed($FeedId);
+		$feed = $cl_data->get_feed($FeedId);
 
 		$intFeedId			= $feed->feed_id;
 		$strFeedUrl			= $feed->feed_url;
