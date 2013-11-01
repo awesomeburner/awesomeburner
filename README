@@ -21,10 +21,26 @@ $api->feed("delete", array("url" => "http://www.ru/rss"))
 
 $api->feed("get", array("feed_id" => 1, "page" => 1, "limit" => 20, "keyword" => array("one", "two")))
 
+
+Статистика
+----------
+
 Вывод статистики
 
 $api->stats("get", null)
 
 Паук
+----
+
+Сканирование всего списка лент.
+
+$api->crawler("all", null)
+
+Сканирование определенного количества лент
 
 $api->crawler("all", array("limit" => 10))
+
+Поиск
+-----
+
+$api->search("keyword", array("limit" => 10, "page" => 1, "keyword" => array("news", "russia", "finance")))
