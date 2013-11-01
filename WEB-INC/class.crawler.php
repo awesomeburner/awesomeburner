@@ -22,7 +22,7 @@ class agregator_crawler extends clsMysql {
 	 * @return type
 	 */
 	public function all($parameters = null) {
-		$data = new data();
+		$cl_data = new data();
 
 		if (isset($parameters['limit'])) {
 			$intLimit = $parameters['limit'];
@@ -30,10 +30,16 @@ class agregator_crawler extends clsMysql {
 			$intLimit = 10;
 		}
 
-		$intAllFeeds = $data->count_feeds();
+		$intAllFeeds = $cl_data->count_feeds();
 		$cio = 1;
 
 		print "Total RRS-feeds:" . $intAllFeeds . "\n";
+
+		if ($intAllFeeds == 0) {
+			print "Error: no feeds\n";
+			return 0;
+		}
+
 
 		for ($i = 0; $i < $intAllFeeds; $i++) {
 			// выбираем из БД список каналов в массив

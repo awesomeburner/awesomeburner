@@ -3,12 +3,6 @@ ini_set('error_reporting', 1);
 ini_set('display_errors', 1);
 set_time_limit(0);
 
-//if (isset ($_GET['debug'])== 1) {
-//	define("DEBUG_MODE", true);
-//} else {
-//	define("DEBUG_MODE", false);
-//}
-
 include "../WEB-INC/conf.php";
 include "../WEB-INC/class.mysql.php";
 include "../WEB-INC/class.api.php";
