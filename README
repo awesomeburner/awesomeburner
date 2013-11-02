@@ -21,6 +21,16 @@ $api->feed("delete", array("url" => "http://www.ru/rss"))
 
 $api->feed("get", array("feed_id" => 1, "page" => 1, "limit" => 20, "keyword" => array("one", "two")))
 
+Статьи
+------
+
+...
+
+$api->feed("item_get", array("feed_id" => 1, "item_id" => 1))
+
+...
+
+$api->feed("item_delete", array("item_id" => 1))
 
 Статистика
 ----------
@@ -44,3 +54,22 @@ $api->crawler("all", array("limit" => 10))
 -----
 
 $api->search("keyword", array("limit" => 10, "page" => 1, "keyword" => array("news", "russia", "finance")))
+
+Voting
+------
+
+...
+
+$api->vote("like_feed", array("feed_id" => 1))
+
+...
+
+$api->vote("like_item", array("item_id" => 1))
+
+...
+
+$api->vote("dislike_feed", array("feed_id" => 1))
+
+...
+
+$api->vote("dislike_item", array("item_id" => 1))
