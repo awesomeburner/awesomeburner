@@ -127,16 +127,18 @@ class data extends clsMysql {
 		}
 
 		$i = 0;
-		$strQuery1 = "SELECT * FROM `".DB_TABLE_PREFIX."feeds` {$_sql_1}{$_sql_3}{$_sql_2}";
-		$doQuery = mysql_query($strQuery1);
+		$strQuery1 = "SELECT * FROM `".DB_TABLE_PREFIX."feeds` {$_sql_1} {$_sql_3} {$_sql_2}";
+		$doQuery = $this->Query($strQuery1);
+		$intNumFeeds = $this->num_rows;
 
-		if (mysql_error() <> "") {
-			echo mysql_error()."<br>\n".$strQuery1;
+		if ($intNumFeeds == 0) {
 			return false;
-		}
-
-		while ($res = mysql_fetch_object($doQuery)) {
-			$arrFeeds[$i++] = new container_feed($res->feed_id, $res->feed_url, $res->lastindex, $res->lastbuilddate_int, $res->pubdate_int, $res->update, $res->title, $res->link, $res->description, $res->language, $res->copyright, $res->managingeditor, $res->webmaster, $res->pubdate, $res->lastbuilddate, $res->category, $res->generator, $res->docs, $res->cloud, $res->ttl, $res->image_url, $res->image_title, $res->image_link);
+		} else {
+			if ($intNumFeeds == 1) {
+				$arrFeeds[0] = new container_feed($res->feed_id, $res->feed_url, $res->lastindex, $res->lastbuilddate_int, $res->pubdate_int, $res->update, $res->title, $res->link, $res->description, $res->language, $res->copyright, $res->managingeditor, $res->webmaster, $res->pubdate, $res->lastbuilddate, $res->category, $res->generator, $res->docs, $res->cloud, $res->ttl, $res->image_url, $res->image_title, $res->image_link);
+			} else {
+				$arrFeeds[$i++] = new container_feed($res->feed_id, $res->feed_url, $res->lastindex, $res->lastbuilddate_int, $res->pubdate_int, $res->update, $res->title, $res->link, $res->description, $res->language, $res->copyright, $res->managingeditor, $res->webmaster, $res->pubdate, $res->lastbuilddate, $res->category, $res->generator, $res->docs, $res->cloud, $res->ttl, $res->image_url, $res->image_title, $res->image_link);
+			}
 		}
 
 		return $arrFeeds;
