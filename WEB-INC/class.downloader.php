@@ -52,9 +52,9 @@ class downloader {
 		$data = curl_exec($ch);
 		
 		
-		if (DEBUG_MODE==true) {
-			echo "\nLoaded: ".strlen($data)."b\n";
-		}
+		// if (DEBUG_MODE==true) {
+		// 	echo "\nLoaded: ".strlen($data)."b\n";
+		// }
 		
 		
 		curl_close($ch);
@@ -96,8 +96,10 @@ class downloader {
      *
      * @return string browser name
      */
-    function _initUserAgent() {
-        if ($this->userAgent!='random') return true;
+    private function _initUserAgent() {
+        if ($this->userAgent!='random') {
+            return true;
+        }
  
         $browsers = array(
             'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)',

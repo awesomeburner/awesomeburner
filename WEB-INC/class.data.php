@@ -128,7 +128,7 @@ class data extends clsMysql {
 
 		$i = 0;
 		$strQuery1 = "SELECT * FROM `".DB_TABLE_PREFIX."feeds` {$_sql_1} {$_sql_3} {$_sql_2}";
-		$doQuery = $this->Query($strQuery1);
+		$res = $this->Query($strQuery1);
 		$intNumFeeds = $this->num_rows;
 
 		if ($intNumFeeds == 0) {
