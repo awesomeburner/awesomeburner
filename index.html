@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Newsarggregator by vanzhiganov</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Newsarggregator</h1>
+        <p>Open-source RSS agregator engine</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/vanzhiganov/NewsArggregator" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/vanzhiganov/NewsArggregator/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/vanzhiganov/NewsArggregator/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <h1>
+<a name="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0" class="anchor" href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0"><span class="octicon octicon-link"></span></a>Установка</h1>
+
+<p>cp WEB-INC/conf.php.origin WEB-INC/conf.php</p>
+
+<h1>
+<a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>API</h1>
+
+<h2>
+<a name="rss" class="anchor" href="#rss"><span class="octicon octicon-link"></span></a>RSS</h2>
+
+<p>Добавление новой rss-ленты в БД</p>
+
+<p>$api-&gt;feed("add", array("url" =&gt; "<a href="http://www.ru/rss">http://www.ru/rss</a>", "lang" =&gt; "en"))</p>
+
+<p>Удаление rss-ленты из БД</p>
+
+<p>$api-&gt;feed("delete", array("url" =&gt; "<a href="http://www.ru/rss%22)">http://www.ru/rss")</a>)</p>
+
+<p>Вывод статей определенной rss-ленты</p>
+
+<p>$api-&gt;feed("get", array("feed_id" =&gt; 1, "page" =&gt; 1, "limit" =&gt; 20, "keyword" =&gt; array("one", "two")))</p>
+
+<h2>
+<a name="%D0%A1%D1%82%D0%B0%D1%82%D1%8C%D0%B8" class="anchor" href="#%D0%A1%D1%82%D0%B0%D1%82%D1%8C%D0%B8"><span class="octicon octicon-link"></span></a>Статьи</h2>
+
+<p>...</p>
+
+<p>$api-&gt;feed("item_get", array("feed_id" =&gt; 1, "item_id" =&gt; 1))</p>
+
+<p>...</p>
+
+<p>$api-&gt;feed("item_delete", array("item_id" =&gt; 1))</p>
+
+<h2>
+<a name="%D0%A1%D1%82%D0%B0%D1%82%D0%B8%D1%81%D1%82%D0%B8%D0%BA%D0%B0" class="anchor" href="#%D0%A1%D1%82%D0%B0%D1%82%D0%B8%D1%81%D1%82%D0%B8%D0%BA%D0%B0"><span class="octicon octicon-link"></span></a>Статистика</h2>
+
+<p>Вывод статистики</p>
+
+<p>$api-&gt;stats("get", null)</p>
+
+<h2>
+<a name="%D0%9F%D0%B0%D1%83%D0%BA" class="anchor" href="#%D0%9F%D0%B0%D1%83%D0%BA"><span class="octicon octicon-link"></span></a>Паук</h2>
+
+<p>Сканирование всего списка лент.</p>
+
+<p>$api-&gt;crawler("all", null)</p>
+
+<p>Сканирование определенного количества лент</p>
+
+<p>$api-&gt;crawler("all", array("limit" =&gt; 10))</p>
+
+<h2>
+<a name="%D0%9F%D0%BE%D0%B8%D1%81%D0%BA" class="anchor" href="#%D0%9F%D0%BE%D0%B8%D1%81%D0%BA"><span class="octicon octicon-link"></span></a>Поиск</h2>
+
+<p>$api-&gt;search("keyword", array("limit" =&gt; 10, "page" =&gt; 1, "keyword" =&gt; array("news", "russia", "finance")))</p>
+
+<h2>
+<a name="voting" class="anchor" href="#voting"><span class="octicon octicon-link"></span></a>Voting</h2>
+
+<p>...</p>
+
+<p>$api-&gt;vote("like_feed", array("feed_id" =&gt; 1))</p>
+
+<p>...</p>
+
+<p>$api-&gt;vote("like_item", array("item_id" =&gt; 1))</p>
+
+<p>...</p>
+
+<p>$api-&gt;vote("dislike_feed", array("feed_id" =&gt; 1))</p>
+
+<p>...</p>
+
+<p>$api-&gt;vote("dislike_item", array("item_id" =&gt; 1))</p>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/vanzhiganov">vanzhiganov</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
