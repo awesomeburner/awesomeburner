@@ -107,38 +107,37 @@ class data extends clsMysql {
 		$_sql_2 = null;
 		$_sql_3 = null;
 
-		if ($intLastIndexStart AND $intLastIndexStop) {
-		if ($intLastIndexStart == "NOW") {
-			$_sql_1 .= "WHERE `lastindex`>='".date("Ymdhis")."'";
-		} else {
-			$_sql_1 .= "WHERE `lastindex`>='{$intLastIndexStart}'";
-		}
+		if ($intLastIndexStart && $intLastIndexStop) {
+			if ($intLastIndexStart == "NOW") {
+				$_sql_1 .= "WHERE `lastindex`>='".date("Ymdhis")."'";
+			} else {
+				$_sql_1 .= "WHERE `lastindex`>='{$intLastIndexStart}'";
+			}
 
-		if ($intLastIndexStop !== "") {
-			$_sql_1 .= " AND `lastindex`<='{$intLastIndexStop}' ";
+			if ($intLastIndexStop !== "") {
+				$_sql_1 .= " AND `lastindex`<='{$intLastIndexStop}' ";
+			}
 		}
-}
 		if ($strSortField <> "") {
-			$_sql_3 = "ORDER BY {$strSortField} {$strLastIndexSort}";
+			$_sql_3 = "ORDER BY {$strSortField} {$strSort}";
 		}
 
 		if ($intLimitStart !== "" AND $intLimitStep !== "") {
-			$_sql_2 .= "LIMIT {$intLimitStart}, {$intLimitStep}";
+			$_sql_2 .= "LIMIT {$intLimitStep}";
 		}
 
-		$i = 0;
 		$strQuery1 = "SELECT * FROM `".DB_TABLE_PREFIX."feeds` {$_sql_1} {$_sql_3} {$_sql_2}";
-		$res = $this->Query($strQuery1);
+		$res = $this->Query($strQuery1, true);
 		$intNumFeeds = $this->num_rows;
-
+print "FEEDS: {$intNumFeeds}\n";
 		if ($intNumFeeds == 0) {
 			return false;
 		} else {
 			if ($intNumFeeds == 1) {
 				$arrFeeds[0] = new container_feed($res->feed_id, $res->feed_url, $res->lastindex, $res->lastbuilddate_int, $res->pubdate_int, $res->update, $res->title, $res->link, $res->description, $res->language, $res->copyright, $res->managingeditor, $res->webmaster, $res->pubdate, $res->lastbuilddate, $res->category, $res->generator, $res->docs, $res->cloud, $res->ttl, $res->image_url, $res->image_title, $res->image_link);
 			} else {
-				for ($x = 0; $i < $x; $x++) {
-					$arrFeeds[$i++] = new container_feed($res->feed_id, $res->feed_url, $res->lastindex, $res->lastbuilddate_int, $res->pubdate_int, $res->update, $res->title, $res->link, $res->description, $res->language, $res->copyright, $res->managingeditor, $res->webmaster, $res->pubdate, $res->lastbuilddate, $res->category, $res->generator, $res->docs, $res->cloud, $res->ttl, $res->image_url, $res->image_title, $res->image_link);
+				for ($x = 0; $x < $intNumFeeds; $x++) {
+					$arrFeeds[$x++] = new container_feed($res->feed_id, $res->feed_url, $res->lastindex, $res->lastbuilddate_int, $res->pubdate_int, $res->update, $res->title, $res->link, $res->description, $res->language, $res->copyright, $res->managingeditor, $res->webmaster, $res->pubdate, $res->lastbuilddate, $res->category, $res->generator, $res->docs, $res->cloud, $res->ttl, $res->image_url, $res->image_title, $res->image_link);
 				}
 			}
 		}
