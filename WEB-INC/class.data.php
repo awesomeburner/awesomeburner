@@ -14,11 +14,12 @@ class data extends clsMysql {
 		// insert check changes function
 
 		$rows = $this->Query("SELECT * FROM `feed_feeds` WHERE `feed_id`='{$feed_id}' LIMIT 1", true);
+		$fields = " ";
 
 		//print_r($rows);return false;
 		//$rows = mysql_fetch_object($q1);
 
-        $arrFeed = new container_feed($rows->feed_id, $rows->feed_url, $rows->lastindex, $rows->lastbuilddate_int, $rows->pubdate_int, $rows->update, $rows->title, $rows->link, $rows->description, $rows->language, $rows->copyright, $rows->managingeditor, $rows->webmaster, $rows->pubdate, $rows->lastbuilddate, $rows->category, $rows->generator, $rows->docs, $rows->cloud, $rows->ttl, $rows->image_url, $rows->image_title, $rows->image_link);
+        	$arrFeed = new container_feed($rows->feed_id, $rows->feed_url, $rows->lastindex, $rows->lastbuilddate_int, $rows->pubdate_int, $rows->update, $rows->title, $rows->link, $rows->description, $rows->language, $rows->copyright, $rows->managingeditor, $rows->webmaster, $rows->pubdate, $rows->lastbuilddate, $rows->category, $rows->generator, $rows->docs, $rows->cloud, $rows->ttl, $rows->image_url, $rows->image_title, $rows->image_link);
 
 		if (($arrFeed->feed_id == $feed_id) && ($arrFeed->feed_url == $feed_url)) {
 			if ($arrFeed->lastindex !== $lastindex) {$fields .= "`lastindex`='{$lastindex}'";}
@@ -44,11 +45,9 @@ class data extends clsMysql {
 			if ($arrFeed->image_link !== $image_link) {$fields .= ", `image_link`='{$image_link}'";}
 
 			$strUpdate = "UPDATE `feed_feeds` SET {$fields} WHERE (`feed_id`={$feed_id})";
-			mysql_query($strUpdate);
+			$this->Query($strUpdate);
 
-			if (mysql_error()) {
-				echo "<br>".mysql_error()."<br>".$strUpdate;
-			}
+			return true;
 		}
 	}
 	
@@ -91,21 +90,12 @@ class data extends clsMysql {
 	}
 
 	function update_channel_indexdate($intChannelID, $intTimestamp) {
-		$q1 = "UPDATE `feed_feeds` SET `lastindex`='{$intTimestamp}' WHERE (`channel_id`={$intChannelID})";
-		mysql_query($q1);
-
-		if (mysql_error() <> "") {
-			echo "<br>".mysql_error()."<br>".$q1."<br>";
-			return false;
-		}
+		$this->Query("UPDATE `feed_feeds` SET `lastindex`='{$intTimestamp}' WHERE (`channel_id`={$intChannelID})");
 
 		return true;
 	}
 
-##################################
-
-
-
+	##################################
 
 	/*
 	$intLimitStart = integer
@@ -117,36 +107,39 @@ class data extends clsMysql {
 		$_sql_2 = null;
 		$_sql_3 = null;
 
-		if ($intLastIndexStart AND $intLastIndexStop) {
-		if ($intLastIndexStart == "NOW") {
-			$_sql_1 .= "WHERE `lastindex`>='".date("Ymdhis")."'";
-		} else {
-			$_sql_1 .= "WHERE `lastindex`>='{$intLastIndexStart}'";
-		}
+		if ($intLastIndexStart && $intLastIndexStop) {
+			if ($intLastIndexStart == "NOW") {
+				$_sql_1 .= "WHERE `lastindex`>='".date("Ymdhis")."'";
+			} else {
+				$_sql_1 .= "WHERE `lastindex`>='{$intLastIndexStart}'";
+			}
 
-		if ($intLastIndexStop !== "") {
-			$_sql_1 .= " AND `lastindex`<='{$intLastIndexStop}' ";
+			if ($intLastIndexStop !== "") {
+				$_sql_1 .= " AND `lastindex`<='{$intLastIndexStop}' ";
+			}
 		}
-}
 		if ($strSortField <> "") {
-			$_sql_3 = "ORDER BY {$strSortField} {$strLastIndexSort}";
+			$_sql_3 = "ORDER BY {$strSortField} {$strSort}";
 		}
 
 		if ($intLimitStart !== "" AND $intLimitStep !== "") {
-			$_sql_2 .= "LIMIT {$intLimitStart}, {$intLimitStep}";
+			$_sql_2 .= "LIMIT {$intLimitStep}";
 		}
 
-		$i = 0;
-		$strQuery1 = "SELECT * FROM `".DB_TABLE_PREFIX."feeds` {$_sql_1}{$_sql_3}{$_sql_2}";
-		$doQuery = mysql_query($strQuery1);
-
-		if (mysql_error() <> "") {
-			echo mysql_error()."<br>\n".$strQuery1;
+		$strQuery1 = "SELECT * FROM `".DB_TABLE_PREFIX."feeds` {$_sql_1} {$_sql_3} {$_sql_2}";
+		$res = $this->Query($strQuery1, true);
+		$intNumFeeds = $this->num_rows;
+print "FEEDS: {$intNumFeeds}\n";
+		if ($intNumFeeds == 0) {
 			return false;
-		}
-
-		while ($res = mysql_fetch_object($doQuery)) {
-			$arrFeeds[$i++] = new container_feed($res->feed_id, $res->feed_url, $res->lastindex, $res->lastbuilddate_int, $res->pubdate_int, $res->update, $res->title, $res->link, $res->description, $res->language, $res->copyright, $res->managingeditor, $res->webmaster, $res->pubdate, $res->lastbuilddate, $res->category, $res->generator, $res->docs, $res->cloud, $res->ttl, $res->image_url, $res->image_title, $res->image_link);
+		} else {
+			if ($intNumFeeds == 1) {
+				$arrFeeds[0] = new container_feed($res->feed_id, $res->feed_url, $res->lastindex, $res->lastbuilddate_int, $res->pubdate_int, $res->update, $res->title, $res->link, $res->description, $res->language, $res->copyright, $res->managingeditor, $res->webmaster, $res->pubdate, $res->lastbuilddate, $res->category, $res->generator, $res->docs, $res->cloud, $res->ttl, $res->image_url, $res->image_title, $res->image_link);
+			} else {
+				for ($x = 0; $x < $intNumFeeds; $x++) {
+					$arrFeeds[$x++] = new container_feed($res->feed_id, $res->feed_url, $res->lastindex, $res->lastbuilddate_int, $res->pubdate_int, $res->update, $res->title, $res->link, $res->description, $res->language, $res->copyright, $res->managingeditor, $res->webmaster, $res->pubdate, $res->lastbuilddate, $res->category, $res->generator, $res->docs, $res->cloud, $res->ttl, $res->image_url, $res->image_title, $res->image_link);
+				}
+			}
 		}
 
 		return $arrFeeds;
@@ -229,8 +222,7 @@ class data extends clsMysql {
 		return $items;
 	}
 
-	function get_item($intItemID)
-	{
+	function get_item($intItemID) {
 		$strQuery = "SELECT * FROM `".DB_TABLE_PREFIX."items` WHERE `item_id`={$intItemID}";
 		$doQuery = mysql_query($strQuery);
 		
@@ -248,7 +240,11 @@ class data extends clsMysql {
 	##########
 
 	function count_feeds() {
+<<<<<<< HEAD
 		return $this->Query("SELECT COUNT(*) FROM `".DB_TABLE_PREFIX."feeds`");
+=======
+		return $this->Query("SELECT COUNT(*) FROM `".DB_TABLE_PREFIX."feeds`", true);
+>>>>>>> 958c783d1dc17f005a9a687915688f2dc8255bf1
 	}
 	
 	function count_feed_items($intFeedID) {
@@ -275,7 +271,11 @@ class data extends clsMysql {
 	**/
 	function delete_item($intItemID) {
 		$this->Query("DELETE FROM `".DB_TABLE_PREFIX."items` WHERE (`item_id`={$intItemID})");
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> 958c783d1dc17f005a9a687915688f2dc8255bf1
 		return true;
 	}
 
@@ -288,13 +288,5 @@ class data extends clsMysql {
 		$this->Query("DELETE FROM `".DB_TABLE_PREFIX."items` WHERE (`feed_id`={$intFeedID})");
 
 		return true;
-	}
-	
-	public function sqldebug($mysql_error) {
-		if ($mysql_error <> "") {
-			echo $mysql_error."<br>".$strQuery;
-		}
-
-		return null;
 	}
 };
