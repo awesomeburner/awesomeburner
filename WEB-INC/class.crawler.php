@@ -7,21 +7,17 @@
 class agregator_crawler extends clsMysql {
 	var $cRssLib;
 
-	// конструктор: определяем в нем необходимые классы
-	//function __construct() {
-	//	$this->cDownload	= new downloader();
-	//	$this->cData	= new data();
-	//	$this->cFeed	= new agregator_feed();
-	//	$this->feed		= new agregator_feed();
-	//	$this->cKeyword	= new keyword();
-	//}
-
-
 	/**
 	 * индексирование всех rss-каналов
 	 * @return type
 	 */
 	public function all($parameters = null) {
+		/*$this->download	= new downloader();
+		$data	= new data();
+		$feed	= new agregator_feed();
+		$feed		= new agregator_feed();
+		$keyword	= new keyword();*/
+
 		$data = new data();
 
 		if (isset($parameters['limit'])) {
@@ -67,8 +63,10 @@ class agregator_crawler extends clsMysql {
 	 * индексирование всех rss-каналов
 	 */
 	public function indexItem($FeedId) {
+		$data	= new data();
+
 		// выбираем из БД список каналов в массив
-		$feed = $this->cData->get_feed($FeedId);
+		$feed = $data->get_feed($FeedId);
 
 		$intFeedId			= $feed->feed_id;
 		$strFeedUrl			= $feed->feed_url;

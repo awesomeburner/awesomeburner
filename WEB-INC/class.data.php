@@ -247,22 +247,12 @@ class data extends clsMysql {
 
 	##########
 
-	function count_feeds()
-	{
-		$query = "SELECT COUNT(*) FROM `".DB_TABLE_PREFIX."feeds`";
-		$q = mysql_query($query);
-		$res = mysql_fetch_array($q);
-		if (mysql_error()) return false;
-		return $res[0];
+	function count_feeds() {
+		return $this->Query("SELECT COUNT(*) FROM `".DB_TABLE_PREFIX."feeds`");
 	}
 	
 	function count_feed_items($intFeedID) {
-		$q = mysql_query("SELECT COUNT(*) FROM `".DB_TABLE_PREFIX."items` WHERE `feed_id`={$intFeedID}");
-		$res = mysql_fetch_array($q);
-
-		if (mysql_error()) return false;
-
-		return $res[0];
+		return $this->Query("SELECT COUNT(*) FROM `".DB_TABLE_PREFIX."items` WHERE `feed_id`={$intFeedID}");
 	}
 
 	###########
@@ -273,9 +263,8 @@ class data extends clsMysql {
 	* return: bool
 	**/
 	function delete_feed($intFeedID) {
-		mysql_query("DELETE FROM `feed_feeds` WHERE (`feed_id`={$intFeedID})");
+		$this->Query("DELETE FROM `feed_feeds` WHERE (`feed_id`={$intFeedID})");
 
-		if (mysql_error()) return false;
 		return true;
 	}
 
@@ -285,9 +274,8 @@ class data extends clsMysql {
 	* return: bool
 	**/
 	function delete_item($intItemID) {
-		mysql_query("DELETE FROM `".DB_TABLE_PREFIX."items` WHERE (`item_id`={$intItemID})");
-
-		if (mysql_error()) return false;
+		$this->Query("DELETE FROM `".DB_TABLE_PREFIX."items` WHERE (`item_id`={$intItemID})");
+		
 		return true;
 	}
 
@@ -297,9 +285,7 @@ class data extends clsMysql {
 	* return: bool
 	**/
 	function delete_items($intFeedID) {
-		mysql_query("DELETE FROM `".DB_TABLE_PREFIX."items` WHERE (`feed_id`={$intFeedID})");
-
-		$this->sqldebug(mysql_error());
+		$this->Query("DELETE FROM `".DB_TABLE_PREFIX."items` WHERE (`feed_id`={$intFeedID})");
 
 		return true;
 	}

@@ -67,4 +67,3 @@ class container_feed
         $this->image_link   = $image_link;
     }
 }
-?>
