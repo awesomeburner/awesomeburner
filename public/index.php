@@ -148,7 +148,7 @@ DDD;
         </div>
         <div class="container_12">
             <div class="grid_6 tc">
-                <?=$but_to_back;?>&nbsp;
+                <?php echo $but_to_back;?>&nbsp;
             </div>
             <div class="grid_6 tc">
                 &nbsp;<?php echo $but_to_next; ?>

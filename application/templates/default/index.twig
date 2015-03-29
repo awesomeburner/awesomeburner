@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Fresh News</title>
+    <link href="{{ url.home }}/css/960.css" rel="stylesheet" type="text/css" />
+    <link href="{{ url.home }}/css/v0.2.css" rel="stylesheet" type="text/css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="pkg_header">
+    <div class="container_12" id="header">
+        <div class="grid_12">
+            <ul id="pkg_header_menu">
+                <li id="pkg_header_logo"><a href="{{ url.home }}/">Fresh News</a></li>
+                <li>RSS-feeds: {{ statistics.feeds.total }}</li>
+                <li>Articles {{ statistics.articles.total }}</li>
+                <li><a href="{{ url.home }}/addfeed.php">Add RSS</a></li>
+            </ul>
+        </div>
+    </div>
+    <hr class="clear" />
+</div>
+<div class="container_12">
+    <div class="grid_12">
+        <?php echo $return; ?>
+    </div>
+    <br class="clear"/>
+</div>
+<div class="container_12">
+    <div class="grid_6 tc">
+        <?php echo $but_to_back;?>&nbsp;
+    </div>
+    <div class="grid_6 tc">
+        &nbsp;<?php echo $but_to_next; ?>
+    </div>
+    <br class="clear"/>
+</div>
+<script src="{{ url.home }}/js/google.analytics.js"></script>
+</body>
+</html>
