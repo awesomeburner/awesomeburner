@@ -12,17 +12,17 @@ class agregator_crawler extends clsMysql {
 	 * @return type
 	 */
 	public function all($parameters = null) {
-<<<<<<< HEAD
-		/*$this->download	= new downloader();
-		$data	= new data();
-		$feed	= new agregator_feed();
-		$feed		= new agregator_feed();
-		$keyword	= new keyword();*/
-
-		$data = new data();
-=======
+//<<<<<<< HEAD
+//		/*$this->download	= new downloader();
+//		$data	= new data();
+//		$feed	= new agregator_feed();
+//		$feed		= new agregator_feed();
+//		$keyword	= new keyword();*/
+//
+//		$data = new data();
+//=======
 		$cl_data = new data();
->>>>>>> 958c783d1dc17f005a9a687915688f2dc8255bf1
+//>>>>>>> 958c783d1dc17f005a9a687915688f2dc8255bf1
 
 		if (isset($parameters['limit'])) {
 			$intLimit = $parameters['limit'];
@@ -73,16 +73,16 @@ class agregator_crawler extends clsMysql {
 	 * индексирование всех rss-каналов
 	 */
 	public function indexItem($FeedId) {
-<<<<<<< HEAD
-		$data	= new data();
-
-		// выбираем из БД список каналов в массив
-		$feed = $data->get_feed($FeedId);
-=======
+//<<<<<<< HEAD
+//		$data	= new data();
+//
+//		// выбираем из БД список каналов в массив
+//		$feed = $data->get_feed($FeedId);
+//=======
 		$cl_data = new data();
 		// выбираем из БД список каналов в массив
 		$feed = $cl_data->get_feed($FeedId);
->>>>>>> 958c783d1dc17f005a9a687915688f2dc8255bf1
+//>>>>>>> 958c783d1dc17f005a9a687915688f2dc8255bf1
 
 		$intFeedId			= $feed->feed_id;
 		$strFeedUrl			= $feed->feed_url;

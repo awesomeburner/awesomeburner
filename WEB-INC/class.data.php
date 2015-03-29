@@ -52,7 +52,7 @@ class data extends clsMysql {
 	}
 	
 	public function save_item($item_id, $feed_id, $pubdate_int, $title, $link, $description, $author, $category, $comments, $enclousure, $guid, $pubdate, $source, $json) {
-		if (!$item_pubdate) {
+		if (!$pubdate_int) {
 			//$item_pubdate = $datetime;
 		}
 		$description_hash = md5($description);
@@ -129,7 +129,7 @@ class data extends clsMysql {
 		$strQuery1 = "SELECT * FROM `".DB_TABLE_PREFIX."feeds` {$_sql_1} {$_sql_3} {$_sql_2}";
 		$res = $this->Query($strQuery1, true);
 		$intNumFeeds = $this->num_rows;
-print "FEEDS: {$intNumFeeds}\n";
+        print "FEEDS: {$intNumFeeds}\n";
 		if ($intNumFeeds == 0) {
 			return false;
 		} else {
@@ -161,9 +161,8 @@ print "FEEDS: {$intNumFeeds}\n";
 		return $arrFeed;
 	}
 
-	function get_feeds_long_index($intLimitStart, $intStep)
-	{
-		$arrResult = $this->get_feeds(null, null, "indexdate", $strSort = "ASC", $intLimitStart, $intLimitStep);
+	function get_feeds_long_index($intLimitStart, $intStep) {
+		$arrResult = $this->get_feeds(null, null, "indexdate", $strSort = "ASC", $intLimitStart, $intStep);
 		return $arrResult;
 	}
 
@@ -172,13 +171,17 @@ print "FEEDS: {$intNumFeeds}\n";
 		$i = 0;
 		$sql_where = null;
 		$boolWhere = false;
-		
+
+        $_sql_1 = "";
+        $_sql_2 = "";
+        $_sql_3 = "";
+        $_sql_4 = "";
 		$_strAnd = null;
 
 		if ($intFeedID) {
 			$_sql_4 = " `feed_id`={$intFeedID}";
 			$boolWhere = true;
-      $_strAnd = " AND";
+            $_strAnd = " AND";
 		}
 
 		if ($intPubDateStart == "NOW") {
@@ -240,11 +243,7 @@ print "FEEDS: {$intNumFeeds}\n";
 	##########
 
 	function count_feeds() {
-<<<<<<< HEAD
-		return $this->Query("SELECT COUNT(*) FROM `".DB_TABLE_PREFIX."feeds`");
-=======
 		return $this->Query("SELECT COUNT(*) FROM `".DB_TABLE_PREFIX."feeds`", true);
->>>>>>> 958c783d1dc17f005a9a687915688f2dc8255bf1
 	}
 	
 	function count_feed_items($intFeedID) {
@@ -271,11 +270,6 @@ print "FEEDS: {$intNumFeeds}\n";
 	**/
 	function delete_item($intItemID) {
 		$this->Query("DELETE FROM `".DB_TABLE_PREFIX."items` WHERE (`item_id`={$intItemID})");
-<<<<<<< HEAD
-		
-=======
-
->>>>>>> 958c783d1dc17f005a9a687915688f2dc8255bf1
 		return true;
 	}
 
