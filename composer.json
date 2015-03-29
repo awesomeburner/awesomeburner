@@ -1,0 +1,16 @@
+{
+  "name": "vanzhiganov/NewsArggregator",
+  "description": "news aggregator",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "author's name",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "j4mie/idiorm": "v1.5.1",
+    "twig/twig": "v1.6.5"
+  }
+}
