@@ -11,5 +11,5 @@ if ($settings['cache_enable'] == true) {
 }
 
 Twig_Autoloader::register();
-$loader = new Twig_Loader_Filesystem(dirname(__FILE__).'/application/template/'.$settings['template_name']);
+$loader = new Twig_Loader_Filesystem(dirname(__FILE__).'/templates/'.$settings['template_name']);
 $twig = new Twig_Environment($loader, $twig_env);
