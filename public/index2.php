@@ -17,4 +17,8 @@ include "../vendor/twig/twig/lib/Twig/Autoloader.php";
 include "../application/load.idiorm.php";
 include "../application/load.twig.php";
 
+$content['url']['home'] = "";
+$content['statistics']['feeds']['total'] = ORM::for_table("feed_feeds")->count();
+$content['statistics']['articles']['total'] = ORM::for_table("feed_items")->count();;
+
 echo $twig->render("index.twig", $content);
