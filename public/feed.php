@@ -102,7 +102,7 @@ PPH;
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title><?=$feed_title;?> - Fresh News</title>
+		<title><?php echo $feed_title;?> - Fresh News</title>
         <link href="/css/960.css" rel="stylesheet" type="text/css" />
         <link href="/css/v0.1.css" rel="stylesheet" type="text/css" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
