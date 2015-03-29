@@ -10,6 +10,7 @@ date_default_timezone_set($default_timezone);
 include "../WEB-INC/class.mysql.php";
 include "../WEB-INC/class.api.php";
 
+include "../WEB-INC/class.downloader.php";
 include "../WEB-INC/class.contain.feed.php";
 include "../WEB-INC/class.contain.item.php";
 include "../WEB-INC/class.feed.php";
