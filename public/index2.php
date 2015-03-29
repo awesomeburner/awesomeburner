@@ -17,4 +17,4 @@ include "../vendor/twig/twig/lib/Twig/Autoloader.php";
 include "../application/load.idiorm.php";
 include "../application/load.twig.php";
 
-echo "test";
+$twig->render("index.twig", $content);
