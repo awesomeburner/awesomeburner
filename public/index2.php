@@ -5,6 +5,10 @@
  * Date: 3/30/15
  * Time: 12:48 AM
  */
+
+ini_set('error_reporting', 1);
+ini_set('display_errors', 1);
+
 include "../application/config.php";
 
 include "../vendor/j4mie/idiorm/idiorm.php";
