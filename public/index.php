@@ -141,7 +141,7 @@ DDD;
         <div class="container_12">
             <div class="grid_12">
                 
-                <?=$return;?>
+                <?php echo $return; ?>
                 
             </div>
             <br class="clear"/>
@@ -151,7 +151,7 @@ DDD;
                 <?=$but_to_back;?>&nbsp;
             </div>
             <div class="grid_6 tc">
-                &nbsp;<?=$but_to_next;?>
+                &nbsp;<?php echo $but_to_next; ?>
             </div>
             <br class="clear"/>
         </div>
