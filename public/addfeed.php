@@ -53,7 +53,7 @@ var ad_domain = 'green';
 					<form action="addfeed.php" method="post">
 						<p>URL: <input type="text" name="url" value="" class="font190" style="width: 100%;" /></p>
 						<input type="submit" value="Add" class="font190" />
-						<input type="hidden" name="sum" value="<?=md5(date("Ymd"));?>" />
+						<input type="hidden" name="sum" value="<?php echo md5(date("Ymd")); ?>" />
 					</form>
 					</div>
 				</div>
