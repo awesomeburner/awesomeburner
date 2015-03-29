@@ -1,2 +1,4 @@
 conf.php
 public/static/*
+vendor/autoload.php
+vendor/*/*
