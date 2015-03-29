@@ -22,6 +22,8 @@ define('DB_USER', GA_M_USER);
 define('DB_PASS', GA_M_PASS);
 define('DB_NAME', GA_M_BASE);
 
+$default_timezone = 'America/New_York';
+
 #-------------------------------------------------------------------------------
 
 function linkFeedAll($intPage = null) {

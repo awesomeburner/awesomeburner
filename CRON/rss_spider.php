@@ -4,6 +4,9 @@
 set_time_limit(0);
 
 include "../WEB-INC/conf.php";
+
+date_default_timezone_set($default_timezone);
+
 include "../WEB-INC/class.mysql.php";
 include "../WEB-INC/class.api.php";
 
