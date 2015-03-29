@@ -135,11 +135,11 @@ PPH;
 
 			<div class="grid_12">
                 <div class="hentry">
-                	<h2 class="article_title"><?=$strItemTitle;?></h2>
+                	<h2 class="article_title"><?php echo $strItemTitle;?></h2>
                 </div>
 			</div>
 			<div class="grid_12">
-				<?=$return;?>
+				<?php echo $return; ?>
 				<!-- AddThis Button BEGIN -->
 				<div class="addthis_toolbox addthis_default_style ">
 				<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
