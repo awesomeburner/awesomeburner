@@ -1,4 +1,12 @@
-# Install
+# NewArggregator
+
+Who uses:
+
+- [AwesomeBurner.com](http://awesomeBurner.com)
+
+![AwesomeBurner.com](awesomeburner.png "AwesomeBurner.com")
+
+## Install
 
 1. Install composer
 
