@@ -8,14 +8,18 @@ Who uses:
 
 ## Install
 
-1. Install composer
+### 1. Composer
 
-`$ curl -sS https://getcomposer.org/installer | php`
+```shell
+curl https://getcomposer.org/installer -O composer.phar
+chmod +x composer.phar
+```
 
-2. Install dependencies
+### 2. Dependencies
 
-`$ php composer.phar install`
-
+```shell
+php composer.phar --working-dir=./ install
+```
 
 `cp WEB-INC/conf.php.origin WEB-INC/conf.php`
 
