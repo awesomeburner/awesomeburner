@@ -1,16 +1,16 @@
 {
-  "name": "vanzhiganov/NewsArggregator",
+  "name": "awesomeburner/awesomeburner",
   "description": "news aggregator",
   "minimum-stability": "stable",
   "license": "proprietary",
   "authors": [
     {
       "name": "Vyacheslav Anzhiganov",
-      "email": "hello@anzhiganov.com"
+      "email": "vanzhiganov@yandex.com"
     }
   ],
   "require": {
-    "j4mie/idiorm": "v1.5.1",
-    "twig/twig": "v1.6.5"
+    "j4mie/idiorm": "^1.5",
+    "twig/twig": "^3.0"
   }
 }
